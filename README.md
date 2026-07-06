@@ -10,7 +10,7 @@ An agentic AI industrial troubleshooting assistant built on top of a [public coa
 Users interact with the troubleshooting assistant through Claude Code using natural language prompts. Ask why steam temperature dropped or what caused an alarm flood, and it walks you through exactly how it reached the answer: every historian query, alarm lookup, knowledge-graph traversal, and plant-document search it ran to drill down to the root cause, in the order it ran them.
 
 
-[insert GIF/visual here: short clip of the agent diagnosing a steam temperature drop and rendering the audit trail; this is the first thing a visitor sees, so it should show a real root-cause trace, not the chat UI]
+https://github.com/user-attachments/assets/19ca5cb0-4407-44f8-ad01-733f0c95c477
 
 
 > **Scope.** This is a demonstration and reference implementation built on five days of data from a single boiler. It's meant to show what auditable, agentic process troubleshooting looks like and to be a foundation you can extend, not a production monitoring tool. If you want to run it on your own unit, see [Contributing](#contributing-and-extending) below.
