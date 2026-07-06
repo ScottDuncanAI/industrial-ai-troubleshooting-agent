@@ -266,18 +266,19 @@ pip install -r requirements.txt
 # Build the document vector index (downloads ~130MB embedding model on first run)
 python build_docs_db.py
 
-# Configure the MCP server, add to .claude/settings.local.json:
+# Configure the MCP server by creating a .mcp.json file at the project root
+# (this is the file Claude Code reads to register project MCP servers):
 # {
 #   "mcpServers": {
 #     "boiler-historian": {
-#       "command": "python",
-#       "args": ["historian_mcp_server.py"],
-#       "cwd": "/absolute/path/to/this/folder"
+#       "type": "stdio",
+#       "command": "/absolute/path/to/python",
+#       "args": ["/absolute/path/to/this/folder/historian_mcp_server.py"]
 #     }
 #   }
 # }
 
-# Restart Claude Code to load the MCP server
+# Restart Claude Code to load the MCP server (approve the .mcp.json trust prompt on first run)
 ```
 
 </details>

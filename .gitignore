@@ -26,6 +26,9 @@ audit_trail_complete_plan.md
 venv/
 
 # Claude Code — machine-specific MCP server config (written by /setup with local absolute paths)
+# .mcp.json is what Claude Code actually reads to register the boiler-historian server;
+# it holds absolute local paths, so it is generated per-machine, not committed.
+.mcp.json
 .claude/settings.local.json
 
 # Generated vector index (rebuilt by /setup via build_docs_db.py)

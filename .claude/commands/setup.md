@@ -52,42 +52,49 @@ If it prints "exists", skip this step and tell the user the document index is al
 
 ### 4. Configure the MCP server
 
-Read the file `.claude/settings.local.json`. Check if it already has a `mcpServers` entry with `boiler-historian` configured.
+The MCP server is registered in a file named `.mcp.json` at the project root — this is the
+file Claude Code reads to discover project-scoped MCP servers. **Important:**
+`.claude/settings.local.json` does NOT register MCP servers; it must be `.mcp.json`.
 
-If NOT already configured, determine the absolute path to this project directory:
+Check whether `.mcp.json` already exists at the project root with a `boiler-historian`
+entry. If it does, skip this step.
+
+If not, determine the absolute path to this project directory:
 
 ```
 python -c "import os; print(os.path.abspath('.'))"
 ```
 
-And determine the absolute path to the Python interpreter:
+And the absolute path to the Python interpreter:
 
 ```
 python -c "import sys; print(sys.executable)"
 ```
 
-Then update `.claude/settings.local.json` to add the MCP server configuration. The file should look like this (merge with any existing content):
+Then create `.mcp.json` at the project root with this content:
 
 ```json
 {
   "mcpServers": {
     "boiler-historian": {
+      "type": "stdio",
       "command": "<absolute path to python>",
-      "args": ["historian_mcp_server.py"],
-      "cwd": "<absolute path to project directory>"
+      "args": ["<absolute path to project directory>/historian_mcp_server.py"]
     }
   }
 }
 ```
 
-Use the actual absolute paths from the commands above. Use forward slashes even on Windows.
+Use the actual absolute paths from the commands above — the interpreter path for `command`,
+and the project directory joined with `historian_mcp_server.py` for the `args` entry. Use
+forward slashes even on Windows.
 
 ### 5. Tell the user what to do next
 
 Tell the user:
 
 1. Setup is complete!
-2. They need to **restart Claude Code** for the boiler data tools to become available. This is required because the MCP server configuration was just added and Claude Code needs to reload it.
+2. They need to **restart Claude Code** for the boiler data tools to become available. This is required because the MCP server configuration was just added and Claude Code needs to reload it. On restart, Claude Code may show a one-time prompt asking whether to trust/use the `boiler-historian` MCP server configured in `.mcp.json` — they should **approve/allow it**, or the tools will not connect.
 3. After restarting, they can start asking questions about the boiler. Some examples:
    - "List all the sensor tags available."
    - "What has steam temperature been doing over the last day?"

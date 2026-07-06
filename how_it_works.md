@@ -32,7 +32,7 @@ MCP stands for **Model Context Protocol** — a standard way for an AI assistant
 external tools. Think of it like a USB interface: Claude doesn't care what's plugged in,
 as long as it speaks the protocol.
 
-When Claude Code starts, it reads `.claude/settings.local.json`, which tells it: "there
+When Claude Code starts, it reads `.mcp.json` at the project root, which tells it: "there
 is a tool server called `boiler-historian` — launch this Python script to talk to it."
 Claude Code starts the Python MCP server as a background process and communicates with
 it by sending JSON messages over the command line (stdin/stdout). Every time Claude wants
@@ -281,18 +281,18 @@ important configuration file in the system.
 
 ---
 
-### `.claude/settings.local.json` — MCP Server Registration
+### `.mcp.json` — MCP Server Registration
 
-This file tells Claude Code that the `boiler-historian` MCP server exists and how to
-launch it:
+This file (at the project root) tells Claude Code that the `boiler-historian` MCP server
+exists and how to launch it:
 
 ```json
 {
   "mcpServers": {
     "boiler-historian": {
+      "type": "stdio",
       "command": "C:/Python311/python.exe",
-      "args": ["historian_mcp_server.py"],
-      "cwd": "C:/path/to/industrial-ai-troubleshooting-agent"
+      "args": ["C:/path/to/industrial-ai-troubleshooting-agent/historian_mcp_server.py"]
     }
   }
 }
@@ -326,7 +326,7 @@ alarm context for the worst fault events.
 
 **`setup.md`** (`/setup`)
 Guides first-time setup: checks Python version, installs requirements, builds the vector
-database if missing, and writes the MCP server configuration to `settings.local.json`.
+database if missing, and writes the MCP server configuration to `.mcp.json`.
 
 ---
 
@@ -587,7 +587,7 @@ It presents:
 | `hmi_style.py` | Chart color theme | Yes (imported by historian_tools) |
 | `plot_helpers.py` | Multi-axis chart renderer | Yes (imported by historian_tools) |
 | `CLAUDE.md` | Standing instructions and workflows for Claude | Yes (in context window) |
-| `.claude/settings.local.json` | MCP server registration | Yes (read at startup) |
+| `.mcp.json` | MCP server registration | Yes (read at startup) |
 | `.claude/commands/audit-trail.md` | `/audit-trail` skill definition | Yes (when invoked) |
 | `.claude/commands/ml-fault-detection.md` | `/ml-fault-detection` skill definition | Yes (when invoked) |
 | `.claude/commands/mspc-analysis.md` | `/mspc-analysis` skill definition | Yes (when invoked) |
