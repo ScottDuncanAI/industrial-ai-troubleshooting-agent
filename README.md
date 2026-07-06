@@ -93,6 +93,8 @@ For the full methodology and all available query workflows, see [CLAUDE.md](CLAU
 
 The system connects Claude to four data sources. The raw sensor data comes from the [Time Series of Industrial Boiler Operations](https://www.kaggle.com/datasets/nikitamanaenkov/time-series-of-industrial-boiler-operations) dataset on Kaggle. The alarm log, knowledge graph, and document library are derived and constructed on top of it.
 
+<img width="1603" height="900" alt="Architecture diagram" src="https://github.com/user-attachments/assets/e1c31aec-7507-482c-932b-9786e0a1b7af" />
+
 #### Time-Series Historian (`boiler_historian.duckdb`)
 
 A DuckDB database of **86,400 sensor readings** across **30 process tags** at 5-second intervals, spanning five days from March 27 to April 1, 2022. Tags cover the full CFB combustion loop: steam temperature and pressure, flue gas oxygen, furnace draft, primary and secondary air flows, cyclone separator differential pressures, and induced draft fan mechanical readings. The primary KPI is `TE_8332A` (boiler outlet steam temperature), which the agent monitors as the main anomaly indicator — approximately 8.6% of the dataset contains anomalous readings.
