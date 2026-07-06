@@ -18,11 +18,22 @@ python -c "import os; dirs = sorted(os.listdir('traces'), reverse=True)[:10]; [p
 
 If there is only one trace or the user just completed an investigation, use the most recent one. Otherwise ask which trace to use.
 
-### 2. Auto-finalize if needed
+### 2. Ensure corrective actions are logged
+
+Before finalizing the session, confirm the trace contains at least one `corrective_action`
+reasoning entry. If the investigation reached a root-cause conclusion but no corrective
+action was logged, log one or more now with `audit_log_reasoning`
+(`reasoning_type="corrective_action"`) before proceeding — each grounded in the confirmed
+root cause, citing its `evidence_steps` and the relevant troubleshooting guide / SOP (use
+`docs_search` if needed, and cite the document title and revision). Do this now, while the
+session is still open, so the entries are captured and the "Recommended Corrective Actions"
+section of `summary.md` is never empty.
+
+### 3. Auto-finalize if needed
 
 Check if the session has a `session_meta.json`. If not, call `audit_end_session` to finalize it before rendering.
 
-### 3. Render the reports
+### 4. Render the reports
 
 ```
 python render_audit.py traces/{run_id}
@@ -30,14 +41,14 @@ python render_audit.py traces/{run_id}
 
 Capture the output. This generates both `report.md` (detailed) and `summary.md` (executive summary). If the script fails, diagnose and report the error.
 
-### 4. Open the reports
+### 5. Open the reports
 
 ```
 start traces/{run_id}/summary.md
 start traces/{run_id}/report.md
 ```
 
-### 5. Summarize
+### 6. Summarize
 
 Report to the user:
 - Both reports have been generated and opened

@@ -472,10 +472,13 @@ async def list_tools() -> list[types.Tool]:
             description=(
                 "Log a reasoning entry into the active audit trace. "
                 "Use this to record hypotheses before investigating, conclusions after, "
-                "observations during analysis, and rejections of ruled-out hypotheses. "
+                "observations during analysis, rejections of ruled-out hypotheses, and "
+                "recommended corrective actions once a root cause is established. "
                 "Each entry can reference evidence_steps (step numbers from prior tool calls). "
-                "Essential for the audit report — every hypothesis and conclusion "
-                "must be logged here to appear in the final report."
+                "Essential for the audit report — every hypothesis, conclusion, and "
+                "corrective action must be logged here to appear in the final report. "
+                "Once a root cause is confirmed, log at least one corrective_action entry "
+                "so the report's Recommended Corrective Actions section is never empty."
             ),
             inputSchema={
                 "type": "object",

@@ -271,12 +271,20 @@ by stating exactly what additional data, test, or check would raise it.
 
 ### Closing the Investigation
 
-**MANDATORY — do not skip either step. A root cause response is not complete until
-both are done.**
+**MANDATORY — do not skip any step. A root cause response is not complete until
+all three are done.**
 
 1. Log the final root cause conclusion with `audit_log_reasoning` including
    `confidence` and all supporting `evidence_steps`.
-2. **Immediately invoke `/audit-trail`** to generate `report.md` and `summary.md`.
+2. Log at least one corrective action with `audit_log_reasoning` using
+   `reasoning_type="corrective_action"`. Each corrective action must:
+   - be grounded in the confirmed root cause and cite its supporting `evidence_steps`;
+   - be based on the relevant troubleshooting guide, SOP, or maintenance procedure
+     (use `docs_search` if not already retrieved) and cite the document title and revision;
+   - be specific and actionable (what to do, on which equipment/tag), not generic advice.
+   The investigation is not complete until at least one corrective action is logged, so
+   the "Recommended Corrective Actions" section of `summary.md` is never empty.
+3. **Immediately invoke `/audit-trail`** to generate `report.md` and `summary.md`.
    - Do not present a written summary and stop — the skill must run.
    - After the skill completes, include the clickable file links in your response
      exactly as the skill outputs them (full `file:///` URLs with spaces as `%20`).
