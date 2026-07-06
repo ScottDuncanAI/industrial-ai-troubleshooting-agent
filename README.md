@@ -1,4 +1,4 @@
-# Agentic AI Industrial Troubleshooting Assitant
+# Agentic AI Industrial Troubleshooting Assistant
 
 An agentic AI industrial troubleshooting assistant built on top of a [public coal-fired boiler dataset](https://www.kaggle.com/datasets/nikitamanaenkov/time-series-of-industrial-boiler-operations). The application connects Claude to four plant data sources through an MCP server:
 
@@ -66,8 +66,6 @@ The project includes built-in slash commands you can type directly into Claude C
 ### Auditable root cause analysis
 
 This is the part that makes the project different from a chatbot pointed at plant data. When you ask a diagnostic question ("why did steam temperature drop?", "what caused this alarm flood?"), the system doesn't just give you an answer; it builds a traceable chain of evidence you can review and verify.
-
-[insert GIF/visual here, optional second visual showing a rendered `/audit-trail` report: the numbered evidence chain, the hypothesis tracker, and the final conclusion with confidence level]
 
 **Automatic tool call capture.** Every data query the system makes during an investigation (every historian lookup, alarm search, knowledge graph traversal, and document retrieval) is automatically recorded in real time as it executes. The trace captures the full inputs and outputs of each tool call, not a summary written after the fact. This means the audit trail reflects exactly what data was queried and what came back, step by step, as the investigation actually happened.
 
