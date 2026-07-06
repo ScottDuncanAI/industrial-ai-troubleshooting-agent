@@ -1,4 +1,4 @@
-# Industrial Agentic AI Troubleshooting Agent
+# Agentic AI Industrial Troubleshooting Assitant
 
 An agentic AI industrial troubleshooting assistant built on top of a [public coal-fired boiler dataset](https://www.kaggle.com/datasets/nikitamanaenkov/time-series-of-industrial-boiler-operations). The application connects Claude to four plant data sources through an MCP server:
 
