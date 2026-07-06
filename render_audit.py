@@ -817,12 +817,20 @@ _PROJECT_ROOT = str(Path(__file__).resolve().parent)
 def _file_url(path_str: str) -> str:
     """Convert an absolute Windows path to a correctly-encoded file:/// URL.
 
-    If the C:\\boiler junction exists, substitutes it for the long project root
-    so URLs stay short (file:///C:/boiler/... instead of the full OneDrive path).
+    If the optional C:\\boiler junction exists AND actually points to this project,
+    substitute it for the long project root so URLs stay short
+    (file:///C:/boiler/... instead of the full OneDrive path). If the junction is
+    absent or points at a different copy of the project, keep the real absolute path
+    so the link resolves.
     """
     from urllib.parse import quote
     abs_path = str(Path(path_str).resolve())
-    if Path(_JUNCTION).exists() and abs_path.startswith(_PROJECT_ROOT):
+    try:
+        junction_ok = (Path(_JUNCTION).exists()
+                       and Path(_JUNCTION).resolve() == Path(_PROJECT_ROOT).resolve())
+    except OSError:
+        junction_ok = False
+    if junction_ok and abs_path.startswith(_PROJECT_ROOT):
         abs_path = _JUNCTION + abs_path[len(_PROJECT_ROOT):]
     forward = abs_path.replace("\\", "/")
     encoded = quote(forward, safe="/:@")

@@ -26,13 +26,20 @@ PLOTS_DIR   = os.path.join(PROJECT_DIR, "plots")
 _JUNCTION = r"C:\boiler"
 
 def _short_path(p: str) -> str:
-    """Replace the long project root with the C:\\boiler junction if it exists."""
-    if os.path.exists(_JUNCTION):
-        try:
+    """Replace the long project root with the C:\\boiler junction, but ONLY when that
+    junction actually resolves to THIS project directory.
+
+    C:\\boiler is an optional personal convenience: a Windows junction pointing at the
+    project so file links stay short. If the junction is absent (most users), or points
+    at a *different* copy of the project, substituting it would produce a path that does
+    not resolve, so we return the real absolute path unchanged."""
+    try:
+        if os.path.exists(_JUNCTION) and \
+                os.path.realpath(_JUNCTION) == os.path.realpath(PROJECT_DIR):
             rel = os.path.relpath(p, PROJECT_DIR)
             return os.path.join(_JUNCTION, rel)
-        except ValueError:
-            pass
+    except (ValueError, OSError):
+        pass
     return p
 
 
