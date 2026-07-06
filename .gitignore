@@ -1,0 +1,42 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Generated outputs
+plots/
+traces/
+*.log
+ml_fault_stderr.txt
+
+# Internal design/planning docs (kept local, not published)
+audit_trail_complete_plan.md
+
+# Video (README demo is uploaded to GitHub via web UI, not committed)
+*.mp4
+
+# Environment
+.env
+.venv/
+venv/
+
+# Claude Code — machine-specific MCP server config (written by /setup with local absolute paths)
+.claude/settings.local.json
+
+# Generated vector index (rebuilt by /setup via build_docs_db.py)
+rag_vector_db/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

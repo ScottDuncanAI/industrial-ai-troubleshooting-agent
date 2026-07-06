@@ -1,0 +1,29 @@
+# Boiler Historian MCP Server — Python dependencies
+# Install: pip install -r requirements.txt
+# Tested with Python 3.11
+
+# MCP framework
+mcp>=1.0
+
+# Database
+duckdb>=0.9.0
+
+# Knowledge graph
+networkx>=3.0
+
+# RAG / vector search
+chromadb>=0.4
+sentence-transformers>=2.2
+pyyaml>=6.0
+
+# Data processing & statistics
+numpy>=1.20
+pandas>=1.3
+scikit-learn>=1.0
+scipy>=1.7
+
+# ML fault detection
+xgboost>=1.7
+
+# Plotting
+matplotlib>=3.5

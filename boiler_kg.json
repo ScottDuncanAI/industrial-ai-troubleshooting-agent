@@ -1,0 +1,2590 @@
+{
+  "directed": true,
+  "multigraph": true,
+  "graph": {},
+  "nodes": [
+    {
+      "node_id": "zhejiang_cfb_plant",
+      "node_type": "Plant",
+      "name": "Zhejiang Chemical Plant CFB Boiler",
+      "boiler_type": "CirculatingFluidizedBed",
+      "fuel": "Coal",
+      "location": "Zhejiang, China",
+      "description": "Coal-fired CFB boiler providing process steam",
+      "aliases": [
+        "plant",
+        "boiler",
+        "cfb"
+      ],
+      "id": "zhejiang_cfb_plant"
+    },
+    {
+      "node_id": "atmosphere",
+      "node_type": "Boundary",
+      "name": "Atmosphere",
+      "description": "Atmospheric air \u2014 source for primary and secondary combustion air",
+      "streams": [
+        "PrimaryAir",
+        "SecondaryAir"
+      ],
+      "aliases": [
+        "air source",
+        "ambient",
+        "inlet air"
+      ],
+      "id": "atmosphere"
+    },
+    {
+      "node_id": "coal_feeder",
+      "node_type": "Boundary",
+      "name": "Coal Feed System",
+      "description": "Coal fuel feed to furnace combustion zone",
+      "streams": [
+        "Coal"
+      ],
+      "aliases": [
+        "coal",
+        "fuel",
+        "fuel feed"
+      ],
+      "id": "coal_feeder"
+    },
+    {
+      "node_id": "feedwater_inlet",
+      "node_type": "Boundary",
+      "name": "Feedwater Supply",
+      "description": "Boiler feedwater supply from deaerator/condensate system",
+      "streams": [
+        "FeedWater"
+      ],
+      "aliases": [
+        "feedwater",
+        "feed water",
+        "bfw",
+        "boiler feed"
+      ],
+      "id": "feedwater_inlet"
+    },
+    {
+      "node_id": "cooling_water_supply",
+      "node_type": "Boundary",
+      "name": "Desuperheating Water Supply",
+      "description": "Cooling water supply for steam desuperheating injection",
+      "streams": [
+        "DesuperheatingWater"
+      ],
+      "aliases": [
+        "desuperheating water",
+        "cooling water",
+        "attemperation water"
+      ],
+      "id": "cooling_water_supply"
+    },
+    {
+      "node_id": "primary_air_system",
+      "node_type": "System",
+      "name": "Primary Air System",
+      "description": "Supplies and preheats primary combustion air to fluidize the bed",
+      "aliases": [
+        "primary air",
+        "pa system"
+      ],
+      "id": "primary_air_system"
+    },
+    {
+      "node_id": "secondary_air_system",
+      "node_type": "System",
+      "name": "Secondary Air System",
+      "description": "Supplies and preheats secondary combustion air for staged combustion",
+      "aliases": [
+        "secondary air",
+        "sa system"
+      ],
+      "id": "secondary_air_system"
+    },
+    {
+      "node_id": "combustion_system",
+      "node_type": "System",
+      "name": "Combustion System",
+      "description": "Coal combustion in the CFB furnace \u2014 generates heat for steam production",
+      "aliases": [
+        "furnace system",
+        "combustion",
+        "fireside"
+      ],
+      "id": "combustion_system"
+    },
+    {
+      "node_id": "flue_gas_system",
+      "node_type": "System",
+      "name": "Flue Gas & Heat Recovery System",
+      "description": "Captures heat from flue gas via cyclone separators and economizer",
+      "aliases": [
+        "flue gas",
+        "heat recovery",
+        "economizer system",
+        "backpass"
+      ],
+      "id": "flue_gas_system"
+    },
+    {
+      "node_id": "draft_system",
+      "node_type": "System",
+      "name": "Draft & Exhaust System",
+      "description": "Maintains furnace negative pressure and exhausts flue gas to atmosphere",
+      "aliases": [
+        "draft",
+        "exhaust",
+        "induced draft",
+        "idf system"
+      ],
+      "id": "draft_system"
+    },
+    {
+      "node_id": "steam_water_system",
+      "node_type": "System",
+      "name": "Steam Generation & Superheating System",
+      "description": "Converts feedwater to superheated steam via drum, superheaters, and desuperheater",
+      "aliases": [
+        "steam system",
+        "water side",
+        "steam water",
+        "superheater system"
+      ],
+      "id": "steam_water_system"
+    },
+    {
+      "node_id": "primary_fan",
+      "node_type": "Equipment",
+      "name": "Primary Fan",
+      "equipment_class": "Fan",
+      "side": null,
+      "criticality": "High",
+      "system": "primary_air_system",
+      "process_streams": [
+        "PrimaryAir"
+      ],
+      "description": "Supplies primary combustion air to fluidize the bed and support lower-furnace combustion",
+      "aliases": [
+        "pa fan",
+        "primary air fan"
+      ],
+      "id": "primary_fan"
+    },
+    {
+      "node_id": "primary_air_preheater",
+      "node_type": "Equipment",
+      "name": "Primary Air Preheater",
+      "equipment_class": "AirPreheater",
+      "side": null,
+      "criticality": "Medium",
+      "system": "primary_air_system",
+      "process_streams": [
+        "PrimaryAir",
+        "FlueGas"
+      ],
+      "description": "Heat exchanger using flue gas waste heat to preheat primary combustion air",
+      "aliases": [
+        "primary preheater",
+        "pa preheater",
+        "air heater"
+      ],
+      "id": "primary_air_preheater"
+    },
+    {
+      "node_id": "furnace_lower_hearth",
+      "node_type": "Equipment",
+      "name": "Furnace Lower Hearth / Bed Zone",
+      "equipment_class": "FurnaceZone",
+      "side": null,
+      "criticality": "Critical",
+      "system": "combustion_system",
+      "process_streams": [
+        "PrimaryAir",
+        "ReturnAir",
+        "Coal",
+        "Solids"
+      ],
+      "description": "Lower furnace combustion zone where coal combusts in the fluidized bed; hot solids recirculate back here from cyclones",
+      "aliases": [
+        "lower hearth",
+        "bed",
+        "lower furnace",
+        "bed zone",
+        "fluidized bed"
+      ],
+      "id": "furnace_lower_hearth"
+    },
+    {
+      "node_id": "return_air_chamber_left",
+      "node_type": "Equipment",
+      "name": "Return Air Chamber (Left)",
+      "equipment_class": "AirChamber",
+      "side": "Left",
+      "criticality": "Medium",
+      "system": "primary_air_system",
+      "process_streams": [
+        "ReturnAir"
+      ],
+      "description": "Left-side return air chamber \u2014 recirculates transport air through the left solid return leg",
+      "aliases": [
+        "left return air",
+        "return air left",
+        "l-seal air left"
+      ],
+      "id": "return_air_chamber_left"
+    },
+    {
+      "node_id": "return_air_chamber_right",
+      "node_type": "Equipment",
+      "name": "Return Air Chamber (Right)",
+      "equipment_class": "AirChamber",
+      "side": "Right",
+      "criticality": "Medium",
+      "system": "primary_air_system",
+      "process_streams": [
+        "ReturnAir"
+      ],
+      "description": "Right-side return air chamber \u2014 recirculates transport air through the right solid return leg",
+      "aliases": [
+        "right return air",
+        "return air right",
+        "l-seal air right"
+      ],
+      "id": "return_air_chamber_right"
+    },
+    {
+      "node_id": "secondary_fan",
+      "node_type": "Equipment",
+      "name": "Secondary Fan",
+      "equipment_class": "Fan",
+      "side": null,
+      "criticality": "High",
+      "system": "secondary_air_system",
+      "process_streams": [
+        "SecondaryAir"
+      ],
+      "description": "Supplies secondary combustion air to upper furnace for staged combustion",
+      "aliases": [
+        "sa fan",
+        "secondary air fan"
+      ],
+      "id": "secondary_fan"
+    },
+    {
+      "node_id": "secondary_air_preheater",
+      "node_type": "Equipment",
+      "name": "Secondary Air Preheater",
+      "equipment_class": "AirPreheater",
+      "side": null,
+      "criticality": "Medium",
+      "system": "secondary_air_system",
+      "process_streams": [
+        "SecondaryAir",
+        "FlueGas"
+      ],
+      "description": "Heat exchanger using flue gas waste heat to preheat secondary combustion air",
+      "aliases": [
+        "secondary preheater",
+        "sa preheater"
+      ],
+      "id": "secondary_air_preheater"
+    },
+    {
+      "node_id": "furnace_chamber",
+      "node_type": "Equipment",
+      "name": "Furnace Chamber (Upper)",
+      "equipment_class": "Furnace",
+      "side": null,
+      "criticality": "Critical",
+      "system": "combustion_system",
+      "process_streams": [
+        "SecondaryAir",
+        "FlueGas"
+      ],
+      "description": "Upper furnace combustion zone; hot flue gas and entrained solids exit here to cyclone separators",
+      "aliases": [
+        "furnace",
+        "upper furnace",
+        "combustion chamber",
+        "firebox"
+      ],
+      "id": "furnace_chamber"
+    },
+    {
+      "node_id": "cyclone_separator_left",
+      "node_type": "Equipment",
+      "name": "Cyclone Separator (Left)",
+      "equipment_class": "CycloneSeparator",
+      "side": "Left",
+      "criticality": "High",
+      "system": "flue_gas_system",
+      "process_streams": [
+        "FlueGas",
+        "Solids"
+      ],
+      "description": "Left cyclone separator \u2014 separates entrained solids from flue gas; solids return to furnace via CFB loop",
+      "aliases": [
+        "left cyclone",
+        "cyclone left",
+        "separator left"
+      ],
+      "id": "cyclone_separator_left"
+    },
+    {
+      "node_id": "cyclone_separator_right",
+      "node_type": "Equipment",
+      "name": "Cyclone Separator (Right)",
+      "equipment_class": "CycloneSeparator",
+      "side": "Right",
+      "criticality": "High",
+      "system": "flue_gas_system",
+      "process_streams": [
+        "FlueGas",
+        "Solids"
+      ],
+      "description": "Right cyclone separator \u2014 separates entrained solids from flue gas; solids return to furnace via CFB loop",
+      "aliases": [
+        "right cyclone",
+        "cyclone right",
+        "separator right"
+      ],
+      "id": "cyclone_separator_right"
+    },
+    {
+      "node_id": "economizer",
+      "node_type": "Equipment",
+      "name": "Upper Economizer",
+      "equipment_class": "HeatExchanger",
+      "side": null,
+      "criticality": "High",
+      "system": "flue_gas_system",
+      "process_streams": [
+        "FlueGas",
+        "FeedWater"
+      ],
+      "description": "Counterflow heat exchanger recovering heat from flue gas to preheat boiler feedwater",
+      "aliases": [
+        "economizer",
+        "eco",
+        "feedwater heater",
+        "flue gas economizer"
+      ],
+      "id": "economizer"
+    },
+    {
+      "node_id": "induced_draft_fan",
+      "node_type": "Equipment",
+      "name": "Induced Draft Fan",
+      "equipment_class": "InducedDraftFan",
+      "side": null,
+      "criticality": "Critical",
+      "system": "draft_system",
+      "process_streams": [
+        "FlueGas"
+      ],
+      "description": "Pulls flue gas through the boiler to maintain negative furnace pressure; critical for safe operation",
+      "aliases": [
+        "idf",
+        "id fan",
+        "induced draft",
+        "exhaust fan"
+      ],
+      "id": "induced_draft_fan"
+    },
+    {
+      "node_id": "chimney",
+      "node_type": "Equipment",
+      "name": "Stack / Chimney",
+      "equipment_class": "Chimney",
+      "side": null,
+      "criticality": "Low",
+      "system": "draft_system",
+      "process_streams": [
+        "FlueGas"
+      ],
+      "description": "Final exhaust stack discharging cleaned flue gas to atmosphere",
+      "aliases": [
+        "stack",
+        "chimney",
+        "flue",
+        "exhaust stack"
+      ],
+      "id": "chimney"
+    },
+    {
+      "node_id": "steam_drum",
+      "node_type": "Equipment",
+      "name": "Steam Drum",
+      "equipment_class": "SteamDrum",
+      "side": null,
+      "criticality": "Critical",
+      "system": "steam_water_system",
+      "process_streams": [
+        "Steam",
+        "FeedWater"
+      ],
+      "description": "Separates saturated steam from water; provides water inventory buffer",
+      "aliases": [
+        "drum",
+        "boiler drum",
+        "steam drum"
+      ],
+      "id": "steam_drum"
+    },
+    {
+      "node_id": "low_temp_superheater",
+      "node_type": "Equipment",
+      "name": "Low Temperature Superheater",
+      "equipment_class": "Superheater",
+      "side": null,
+      "criticality": "High",
+      "system": "steam_water_system",
+      "process_streams": [
+        "Steam"
+      ],
+      "description": "First-stage superheater; raises saturated steam temperature above saturation point",
+      "aliases": [
+        "low temp superheater",
+        "ltsh",
+        "first superheater"
+      ],
+      "id": "low_temp_superheater"
+    },
+    {
+      "node_id": "primary_desuperheater",
+      "node_type": "Equipment",
+      "name": "Primary Desuperheater",
+      "equipment_class": "Desuperheater",
+      "side": null,
+      "criticality": "High",
+      "system": "steam_water_system",
+      "process_streams": [
+        "Steam",
+        "DesuperheatingWater"
+      ],
+      "description": "Injects cooling water into steam to control final steam temperature; TV_8329ZC valve modulates water flow",
+      "aliases": [
+        "desuperheater",
+        "attemperation",
+        "spray attemperator",
+        "desup"
+      ],
+      "id": "primary_desuperheater"
+    },
+    {
+      "node_id": "high_temp_superheater",
+      "node_type": "Equipment",
+      "name": "High Temperature Superheater",
+      "equipment_class": "Superheater",
+      "side": null,
+      "criticality": "High",
+      "system": "steam_water_system",
+      "process_streams": [
+        "Steam"
+      ],
+      "description": "Final-stage superheater; brings steam to target outlet temperature",
+      "aliases": [
+        "high temp superheater",
+        "htsh",
+        "final superheater"
+      ],
+      "id": "high_temp_superheater"
+    },
+    {
+      "node_id": "steam_outlet",
+      "node_type": "Equipment",
+      "name": "Steam Outlet",
+      "equipment_class": "SteamOutlet",
+      "side": null,
+      "criticality": "Critical",
+      "system": "steam_water_system",
+      "process_streams": [
+        "Steam"
+      ],
+      "description": "Final steam outlet \u2014 TE_8332A (primary KPI, 530-545 degC) is measured here",
+      "aliases": [
+        "outlet",
+        "steam outlet",
+        "main steam",
+        "boiler outlet"
+      ],
+      "id": "steam_outlet"
+    },
+    {
+      "node_id": "PT_8313A",
+      "node_type": "Sensor",
+      "tag_name": "PT_8313A",
+      "name": "PT_8313A \u2014 Upper furnace pressure (point A)",
+      "sensor_type": "Pressure",
+      "units": "kPa",
+      "description": "Upper furnace pressure (point A)",
+      "normal_min": null,
+      "normal_max": null,
+      "is_primary_kpi": false,
+      "aliases": [
+        "pt_8313a",
+        "upper furnace pressure (point a)"
+      ],
+      "id": "PT_8313A"
+    },
+    {
+      "node_id": "PT_8313B",
+      "node_type": "Sensor",
+      "tag_name": "PT_8313B",
+      "name": "PT_8313B \u2014 Upper furnace pressure (point B)",
+      "sensor_type": "Pressure",
+      "units": "kPa",
+      "description": "Upper furnace pressure (point B)",
+      "normal_min": null,
+      "normal_max": null,
+      "is_primary_kpi": false,
+      "aliases": [
+        "pt_8313b",
+        "upper furnace pressure (point b)"
+      ],
+      "id": "PT_8313B"
+    },
+    {
+      "node_id": "PT_8313C",
+      "node_type": "Sensor",
+      "tag_name": "PT_8313C",
+      "name": "PT_8313C \u2014 Upper furnace pressure (point C)",
+      "sensor_type": "Pressure",
+      "units": "kPa",
+      "description": "Upper furnace pressure (point C)",
+      "normal_min": null,
+      "normal_max": null,
+      "is_primary_kpi": false,
+      "aliases": [
+        "pt_8313c",
+        "upper furnace pressure (point c)"
+      ],
+      "id": "PT_8313C"
+    },
+    {
+      "node_id": "PT_8313D",
+      "node_type": "Sensor",
+      "tag_name": "PT_8313D",
+      "name": "PT_8313D \u2014 Upper furnace pressure (point D)",
+      "sensor_type": "Pressure",
+      "units": "kPa",
+      "description": "Upper furnace pressure (point D)",
+      "normal_min": null,
+      "normal_max": null,
+      "is_primary_kpi": false,
+      "aliases": [
+        "pt_8313d",
+        "upper furnace pressure (point d)"
+      ],
+      "id": "PT_8313D"
+    },
+    {
+      "node_id": "PT_8313E",
+      "node_type": "Sensor",
+      "tag_name": "PT_8313E",
+      "name": "PT_8313E \u2014 Upper furnace pressure (point E)",
+      "sensor_type": "Pressure",
+      "units": "kPa",
+      "description": "Upper furnace pressure (point E)",
+      "normal_min": null,
+      "normal_max": null,
+      "is_primary_kpi": false,
+      "aliases": [
+        "pt_8313e",
+        "upper furnace pressure (point e)"
+      ],
+      "id": "PT_8313E"
+    },
+    {
+      "node_id": "PT_8313F",
+      "node_type": "Sensor",
+      "tag_name": "PT_8313F",
+      "name": "PT_8313F \u2014 Upper furnace pressure (point F)",
+      "sensor_type": "Pressure",
+      "units": "kPa",
+      "description": "Upper furnace pressure (point F)",
+      "normal_min": null,
+      "normal_max": null,
+      "is_primary_kpi": false,
+      "aliases": [
+        "pt_8313f",
+        "upper furnace pressure (point f)"
+      ],
+      "id": "PT_8313F"
+    },
+    {
+      "node_id": "PTCA_8322A",
+      "node_type": "Sensor",
+      "tag_name": "PTCA_8322A",
+      "name": "PTCA_8322A \u2014 Pot pressure (left side steam drum pressure)",
+      "sensor_type": "Pressure",
+      "units": "kPa",
+      "description": "Pot pressure (left side steam drum pressure)",
+      "normal_min": null,
+      "normal_max": null,
+      "is_primary_kpi": false,
+      "aliases": [
+        "ptca_8322a",
+        "pot pressure (left side steam drum pressure)"
+      ],
+      "id": "PTCA_8322A"
+    },
+    {
+      "node_id": "PTCA_8324",
+      "node_type": "Sensor",
+      "tag_name": "PTCA_8324",
+      "name": "PTCA_8324 \u2014 Container outlet vapour pressure",
+      "sensor_type": "Pressure",
+      "units": "kPa",
+      "description": "Container outlet vapour pressure",
+      "normal_min": null,
+      "normal_max": null,
+      "is_primary_kpi": false,
+      "aliases": [
+        "ptca_8324",
+        "container outlet vapour pressure"
+      ],
+      "id": "PTCA_8324"
+    },
+    {
+      "node_id": "TE_8319A",
+      "node_type": "Sensor",
+      "tag_name": "TE_8319A",
+      "name": "TE_8319A \u2014 Flue gas temperature at upper economizer outlet (left)",
+      "sensor_type": "Temperature",
+      "units": "\u00b0C",
+      "description": "Flue gas temperature at upper economizer outlet (left)",
+      "normal_min": null,
+      "normal_max": null,
+      "is_primary_kpi": false,
+      "aliases": [
+        "te_8319a",
+        "flue gas temperature at upper economizer outlet (left)"
+      ],
+      "id": "TE_8319A"
+    },
+    {
+      "node_id": "TE_8319B",
+      "node_type": "Sensor",
+      "tag_name": "TE_8319B",
+      "name": "TE_8319B \u2014 Flue gas temperature at upper economizer outlet (right)",
+      "sensor_type": "Temperature",
+      "units": "\u00b0C",
+      "description": "Flue gas temperature at upper economizer outlet (right)",
+      "normal_min": null,
+      "normal_max": null,
+      "is_primary_kpi": false,
+      "aliases": [
+        "te_8319b",
+        "flue gas temperature at upper economizer outlet (right)"
+      ],
+      "id": "TE_8319B"
+    },
+    {
+      "node_id": "TE_8313B",
+      "node_type": "Sensor",
+      "tag_name": "TE_8313B",
+      "name": "TE_8313B \u2014 Temperature in upper part of furnace chamber (right side)",
+      "sensor_type": "Temperature",
+      "units": "\u00b0C",
+      "description": "Temperature in upper part of furnace chamber (right side)",
+      "normal_min": null,
+      "normal_max": null,
+      "is_primary_kpi": false,
+      "aliases": [
+        "te_8313b",
+        "temperature in upper part of furnace chamber (right side)"
+      ],
+      "id": "TE_8313B"
+    },
+    {
+      "node_id": "TE_8303",
+      "node_type": "Sensor",
+      "tag_name": "TE_8303",
+      "name": "TE_8303 \u2014 Primary air preheater outlet air temperature",
+      "sensor_type": "Temperature",
+      "units": "\u00b0C",
+      "description": "Primary air preheater outlet air temperature",
+      "normal_min": null,
+      "normal_max": null,
+      "is_primary_kpi": false,
+      "aliases": [
+        "te_8303",
+        "primary air preheater outlet air temperature"
+      ],
+      "id": "TE_8303"
+    },
+    {
+      "node_id": "TE_8304",
+      "node_type": "Sensor",
+      "tag_name": "TE_8304",
+      "name": "TE_8304 \u2014 Secondary air preheater outlet air temperature",
+      "sensor_type": "Temperature",
+      "units": "\u00b0C",
+      "description": "Secondary air preheater outlet air temperature",
+      "normal_min": null,
+      "normal_max": null,
+      "is_primary_kpi": false,
+      "aliases": [
+        "te_8304",
+        "secondary air preheater outlet air temperature"
+      ],
+      "id": "TE_8304"
+    },
+    {
+      "node_id": "TE_8332A",
+      "node_type": "Sensor",
+      "tag_name": "TE_8332A",
+      "name": "TE_8332A \u2014 Boiler outlet steam temperature (primary KPI \u2014 normal 530\u2013545\u00b0C)",
+      "sensor_type": "Temperature",
+      "units": "\u00b0C",
+      "description": "Boiler outlet steam temperature (primary KPI \u2014 normal 530\u2013545\u00b0C)",
+      "normal_min": 530.0,
+      "normal_max": 545.0,
+      "is_primary_kpi": true,
+      "aliases": [
+        "te_8332a",
+        "boiler outlet steam temperature (primary kpi \u2014 normal 530\u2013545\u00b0c)"
+      ],
+      "id": "TE_8332A"
+    },
+    {
+      "node_id": "TV_8329ZC",
+      "node_type": "Sensor",
+      "tag_name": "TV_8329ZC",
+      "name": "TV_8329ZC \u2014 Primary desuperheater outlet steam temperature regulating valve position",
+      "sensor_type": "Valve",
+      "units": "%",
+      "description": "Primary desuperheater outlet steam temperature regulating valve position",
+      "normal_min": null,
+      "normal_max": null,
+      "is_primary_kpi": false,
+      "aliases": [
+        "tv_8329zc",
+        "primary desuperheater outlet steam temperature regulating valve position"
+      ],
+      "id": "TV_8329ZC"
+    },
+    {
+      "node_id": "FT_8301",
+      "node_type": "Sensor",
+      "tag_name": "FT_8301",
+      "name": "FT_8301 \u2014 Primary fan outlet flow rate",
+      "sensor_type": "Flow",
+      "units": "m\u00b3/h",
+      "description": "Primary fan outlet flow rate",
+      "normal_min": null,
+      "normal_max": null,
+      "is_primary_kpi": false,
+      "aliases": [
+        "ft_8301",
+        "primary fan outlet flow rate"
+      ],
+      "id": "FT_8301"
+    },
+    {
+      "node_id": "FT_8302",
+      "node_type": "Sensor",
+      "tag_name": "FT_8302",
+      "name": "FT_8302 \u2014 Secondary fan outlet flow rate",
+      "sensor_type": "Flow",
+      "units": "m\u00b3/h",
+      "description": "Secondary fan outlet flow rate",
+      "normal_min": null,
+      "normal_max": null,
+      "is_primary_kpi": false,
+      "aliases": [
+        "ft_8302",
+        "secondary fan outlet flow rate"
+      ],
+      "id": "FT_8302"
+    },
+    {
+      "node_id": "FT_8306A",
+      "node_type": "Sensor",
+      "tag_name": "FT_8306A",
+      "name": "FT_8306A \u2014 Return air chamber air flow (left)",
+      "sensor_type": "Flow",
+      "units": "m\u00b3/h",
+      "description": "Return air chamber air flow (left)",
+      "normal_min": null,
+      "normal_max": null,
+      "is_primary_kpi": false,
+      "aliases": [
+        "ft_8306a",
+        "return air chamber air flow (left)"
+      ],
+      "id": "FT_8306A"
+    },
+    {
+      "node_id": "FT_8306B",
+      "node_type": "Sensor",
+      "tag_name": "FT_8306B",
+      "name": "FT_8306B \u2014 Return air chamber air flow (right)",
+      "sensor_type": "Flow",
+      "units": "m\u00b3/h",
+      "description": "Return air chamber air flow (right)",
+      "normal_min": null,
+      "normal_max": null,
+      "is_primary_kpi": false,
+      "aliases": [
+        "ft_8306b",
+        "return air chamber air flow (right)"
+      ],
+      "id": "FT_8306B"
+    },
+    {
+      "node_id": "AIR_8301A",
+      "node_type": "Sensor",
+      "tag_name": "AIR_8301A",
+      "name": "AIR_8301A \u2014 Upper economizer inlet flue gas oxygen content (left)",
+      "sensor_type": "Oxygen",
+      "units": "%",
+      "description": "Upper economizer inlet flue gas oxygen content (left)",
+      "normal_min": null,
+      "normal_max": null,
+      "is_primary_kpi": false,
+      "aliases": [
+        "air_8301a",
+        "upper economizer inlet flue gas oxygen content (left)"
+      ],
+      "id": "AIR_8301A"
+    },
+    {
+      "node_id": "AIR_8301B",
+      "node_type": "Sensor",
+      "tag_name": "AIR_8301B",
+      "name": "AIR_8301B \u2014 Upper economizer inlet flue gas oxygen content (right)",
+      "sensor_type": "Oxygen",
+      "units": "%",
+      "description": "Upper economizer inlet flue gas oxygen content (right)",
+      "normal_min": null,
+      "normal_max": null,
+      "is_primary_kpi": false,
+      "aliases": [
+        "air_8301b",
+        "upper economizer inlet flue gas oxygen content (right)"
+      ],
+      "id": "AIR_8301B"
+    },
+    {
+      "node_id": "YFJ3_AI",
+      "node_type": "Sensor",
+      "tag_name": "YFJ3_AI",
+      "name": "YFJ3_AI \u2014 Induced draft fan motor current",
+      "sensor_type": "Motor",
+      "units": "A",
+      "description": "Induced draft fan motor current",
+      "normal_min": null,
+      "normal_max": null,
+      "is_primary_kpi": false,
+      "aliases": [
+        "yfj3_ai",
+        "induced draft fan motor current"
+      ],
+      "id": "YFJ3_AI"
+    },
+    {
+      "node_id": "YFJ3_ZD1",
+      "node_type": "Sensor",
+      "tag_name": "YFJ3_ZD1",
+      "name": "YFJ3_ZD1 \u2014 Vibration of induced draft fan bearing shell (point A)",
+      "sensor_type": "Vibration",
+      "units": "mm/s",
+      "description": "Vibration of induced draft fan bearing shell (point A)",
+      "normal_min": null,
+      "normal_max": null,
+      "is_primary_kpi": false,
+      "aliases": [
+        "yfj3_zd1",
+        "vibration of induced draft fan bearing shell (point a)"
+      ],
+      "id": "YFJ3_ZD1"
+    },
+    {
+      "node_id": "YFJ3_ZD2",
+      "node_type": "Sensor",
+      "tag_name": "YFJ3_ZD2",
+      "name": "YFJ3_ZD2 \u2014 Vibration of induced draft fan bearing shell (point B)",
+      "sensor_type": "Vibration",
+      "units": "mm/s",
+      "description": "Vibration of induced draft fan bearing shell (point B)",
+      "normal_min": null,
+      "normal_max": null,
+      "is_primary_kpi": false,
+      "aliases": [
+        "yfj3_zd2",
+        "vibration of induced draft fan bearing shell (point b)"
+      ],
+      "id": "YFJ3_ZD2"
+    },
+    {
+      "node_id": "SXLTCYZ",
+      "node_type": "Sensor",
+      "tag_name": "SXLTCYZ",
+      "name": "SXLTCYZ \u2014 Differential pressure between upper and lower hearth (left)",
+      "sensor_type": "Differential Pressure",
+      "units": "Pa",
+      "description": "Differential pressure between upper and lower hearth (left)",
+      "normal_min": null,
+      "normal_max": null,
+      "is_primary_kpi": false,
+      "aliases": [
+        "sxltcyz",
+        "differential pressure between upper and lower hearth (left)"
+      ],
+      "id": "SXLTCYZ"
+    },
+    {
+      "node_id": "SXLTCYY",
+      "node_type": "Sensor",
+      "tag_name": "SXLTCYY",
+      "name": "SXLTCYY \u2014 Differential pressure between upper and lower hearth (right)",
+      "sensor_type": "Differential Pressure",
+      "units": "Pa",
+      "description": "Differential pressure between upper and lower hearth (right)",
+      "normal_min": null,
+      "normal_max": null,
+      "is_primary_kpi": false,
+      "aliases": [
+        "sxltcyy",
+        "differential pressure between upper and lower hearth (right)"
+      ],
+      "id": "SXLTCYY"
+    },
+    {
+      "node_id": "ZCLCCY",
+      "node_type": "Sensor",
+      "tag_name": "ZCLCCY",
+      "name": "ZCLCCY \u2014 Differential pressure in the left layer (cyclone separator)",
+      "sensor_type": "Differential Pressure",
+      "units": "Pa",
+      "description": "Differential pressure in the left layer (cyclone separator)",
+      "normal_min": null,
+      "normal_max": null,
+      "is_primary_kpi": false,
+      "aliases": [
+        "zclccy",
+        "differential pressure in the left layer (cyclone separator)"
+      ],
+      "id": "ZCLCCY"
+    },
+    {
+      "node_id": "YCLCCY",
+      "node_type": "Sensor",
+      "tag_name": "YCLCCY",
+      "name": "YCLCCY \u2014 Differential pressure in the right layer (cyclone separator)",
+      "sensor_type": "Differential Pressure",
+      "units": "Pa",
+      "description": "Differential pressure in the right layer (cyclone separator)",
+      "normal_min": null,
+      "normal_max": null,
+      "is_primary_kpi": false,
+      "aliases": [
+        "yclccy",
+        "differential pressure in the right layer (cyclone separator)"
+      ],
+      "id": "YCLCCY"
+    },
+    {
+      "node_id": "YJJWSLL",
+      "node_type": "Sensor",
+      "tag_name": "YJJWSLL",
+      "name": "YJJWSLL \u2014 Primary desuperheating water flow output",
+      "sensor_type": "Flow",
+      "units": "t/h",
+      "description": "Primary desuperheating water flow output",
+      "normal_min": null,
+      "normal_max": null,
+      "is_primary_kpi": false,
+      "aliases": [
+        "yjjwsll",
+        "primary desuperheating water flow output"
+      ],
+      "id": "YJJWSLL"
+    },
+    {
+      "node_id": "ZZQBCHLL",
+      "node_type": "Sensor",
+      "tag_name": "ZZQBCHLL",
+      "name": "ZZQBCHLL \u2014 Main steam flow rate after compensation",
+      "sensor_type": "Flow",
+      "units": "t/h",
+      "description": "Main steam flow rate after compensation",
+      "normal_min": null,
+      "normal_max": null,
+      "is_primary_kpi": false,
+      "aliases": [
+        "zzqbchll",
+        "main steam flow rate after compensation"
+      ],
+      "id": "ZZQBCHLL"
+    },
+    {
+      "node_id": "pv_steam_outlet_temperature",
+      "node_type": "ProcessVariable",
+      "name": "Steam Outlet Temperature",
+      "physical_quantity": "Temperature",
+      "process_stream": "Steam",
+      "units": "degC",
+      "is_primary_kpi": true,
+      "measured_by": [
+        "TE_8332A"
+      ],
+      "description": "Final superheated steam temperature \u2014 PRIMARY KPI",
+      "id": "pv_steam_outlet_temperature"
+    },
+    {
+      "node_id": "pv_furnace_pressure",
+      "node_type": "ProcessVariable",
+      "name": "Upper Furnace Pressure",
+      "physical_quantity": "Pressure",
+      "process_stream": "FlueGas",
+      "units": "kPa",
+      "is_primary_kpi": false,
+      "measured_by": [
+        "PT_8313A",
+        "PT_8313B",
+        "PT_8313C",
+        "PT_8313D",
+        "PT_8313E",
+        "PT_8313F"
+      ],
+      "description": "Furnace chamber pressure (negative = induced draft operating correctly)",
+      "id": "pv_furnace_pressure"
+    },
+    {
+      "node_id": "pv_furnace_temperature",
+      "node_type": "ProcessVariable",
+      "name": "Upper Furnace Temperature",
+      "physical_quantity": "Temperature",
+      "process_stream": "Combustion",
+      "units": "degC",
+      "is_primary_kpi": false,
+      "measured_by": [
+        "TE_8313B"
+      ],
+      "description": "Temperature in the upper furnace combustion zone",
+      "id": "pv_furnace_temperature"
+    },
+    {
+      "node_id": "pv_hearth_dp",
+      "node_type": "ProcessVariable",
+      "name": "Hearth Differential Pressure",
+      "physical_quantity": "DifferentialPressure",
+      "process_stream": "Combustion",
+      "units": "Pa",
+      "is_primary_kpi": false,
+      "measured_by": [
+        "SXLTCYZ",
+        "SXLTCYY"
+      ],
+      "description": "Upper/lower hearth differential pressure \u2014 indicates bed inventory and solid loading",
+      "id": "pv_hearth_dp"
+    },
+    {
+      "node_id": "pv_steam_drum_pressure",
+      "node_type": "ProcessVariable",
+      "name": "Steam Drum Pressure",
+      "physical_quantity": "Pressure",
+      "process_stream": "Steam",
+      "units": "kPa",
+      "is_primary_kpi": false,
+      "measured_by": [
+        "PTCA_8322A"
+      ],
+      "description": "Steam drum operating pressure \u2014 determines saturation temperature",
+      "id": "pv_steam_drum_pressure"
+    },
+    {
+      "node_id": "pv_outlet_steam_pressure",
+      "node_type": "ProcessVariable",
+      "name": "Outlet Steam Pressure",
+      "physical_quantity": "Pressure",
+      "process_stream": "Steam",
+      "units": "kPa",
+      "is_primary_kpi": false,
+      "measured_by": [
+        "PTCA_8324"
+      ],
+      "description": "Final steam pressure at boiler outlet",
+      "id": "pv_outlet_steam_pressure"
+    },
+    {
+      "node_id": "pv_flue_gas_oxygen",
+      "node_type": "ProcessVariable",
+      "name": "Flue Gas Oxygen Content",
+      "physical_quantity": "OxygenContent",
+      "process_stream": "FlueGas",
+      "units": "%",
+      "is_primary_kpi": false,
+      "measured_by": [
+        "AIR_8301A",
+        "AIR_8301B"
+      ],
+      "description": "Residual O2 in flue gas at economizer inlet \u2014 indicates combustion excess air ratio",
+      "id": "pv_flue_gas_oxygen"
+    },
+    {
+      "node_id": "pv_economizer_flue_gas_temp",
+      "node_type": "ProcessVariable",
+      "name": "Economizer Outlet Flue Gas Temperature",
+      "physical_quantity": "Temperature",
+      "process_stream": "FlueGas",
+      "units": "degC",
+      "is_primary_kpi": false,
+      "measured_by": [
+        "TE_8319A",
+        "TE_8319B"
+      ],
+      "description": "Flue gas temperature after economizer \u2014 indicates heat recovery efficiency",
+      "id": "pv_economizer_flue_gas_temp"
+    },
+    {
+      "node_id": "pv_main_steam_flow",
+      "node_type": "ProcessVariable",
+      "name": "Main Steam Flow",
+      "physical_quantity": "FlowRate",
+      "process_stream": "Steam",
+      "units": "t/h",
+      "is_primary_kpi": false,
+      "measured_by": [
+        "ZZQBCHLL"
+      ],
+      "description": "Compensated main steam mass flow rate \u2014 primary load indicator",
+      "id": "pv_main_steam_flow"
+    },
+    {
+      "node_id": "pv_desuperheat_water_flow",
+      "node_type": "ProcessVariable",
+      "name": "Desuperheating Water Flow",
+      "physical_quantity": "FlowRate",
+      "process_stream": "DesuperheatingWater",
+      "units": "t/h",
+      "is_primary_kpi": false,
+      "measured_by": [
+        "YJJWSLL"
+      ],
+      "description": "Cooling water injection flow for steam temperature control",
+      "id": "pv_desuperheat_water_flow"
+    },
+    {
+      "node_id": "steam_temp_control_loop",
+      "node_type": "ControlLoop",
+      "name": "Steam Temperature Control Loop",
+      "controlled_variable": "pv_steam_outlet_temperature",
+      "feedback_sensors": [
+        "TE_8332A"
+      ],
+      "actuator_sensors": [
+        "TV_8329ZC",
+        "YJJWSLL"
+      ],
+      "controlled_equipment": [
+        "primary_desuperheater"
+      ],
+      "setpoint_description": "530-545 degC",
+      "control_action": "Opens TV_8329ZC to increase YJJWSLL water flow when TE_8332A is high",
+      "description": "Maintains boiler outlet steam temperature within 530-545 degC",
+      "aliases": [
+        "steam temp control",
+        "temperature control",
+        "desuperheating control"
+      ],
+      "id": "steam_temp_control_loop"
+    },
+    {
+      "node_id": "furnace_draft_control_loop",
+      "node_type": "ControlLoop",
+      "name": "Furnace Draft Control Loop",
+      "controlled_variable": "pv_furnace_pressure",
+      "feedback_sensors": [
+        "PT_8313A",
+        "PT_8313B",
+        "PT_8313C",
+        "PT_8313D",
+        "PT_8313E",
+        "PT_8313F"
+      ],
+      "actuator_sensors": [
+        "YFJ3_AI"
+      ],
+      "controlled_equipment": [
+        "induced_draft_fan"
+      ],
+      "setpoint_description": "Negative pressure (suction) in furnace",
+      "control_action": "Increases IDF fan speed when furnace pressure rises toward zero",
+      "description": "Maintains negative furnace pressure by controlling induced draft fan speed",
+      "aliases": [
+        "draft control",
+        "furnace pressure control",
+        "idf control"
+      ],
+      "id": "furnace_draft_control_loop"
+    },
+    {
+      "node_id": "combustion_air_control_loop",
+      "node_type": "ControlLoop",
+      "name": "Combustion Air / O2 Trim Control Loop",
+      "controlled_variable": "pv_flue_gas_oxygen",
+      "feedback_sensors": [
+        "AIR_8301A",
+        "AIR_8301B"
+      ],
+      "actuator_sensors": [
+        "FT_8301",
+        "FT_8302"
+      ],
+      "controlled_equipment": [
+        "primary_fan",
+        "secondary_fan"
+      ],
+      "setpoint_description": "Target O2 % in flue gas",
+      "control_action": "Adjusts primary and secondary fan speeds to hit O2 setpoint",
+      "description": "Optimizes combustion efficiency by trimming air flows to maintain target flue gas O2",
+      "aliases": [
+        "o2 control",
+        "air control",
+        "combustion control",
+        "excess air control"
+      ],
+      "id": "combustion_air_control_loop"
+    },
+    {
+      "node_id": "normal_operation",
+      "node_type": "OperatingMode",
+      "name": "Normal Operation",
+      "condition": "530 <= TE_8332A <= 545",
+      "te_8332a_min": 530.0,
+      "te_8332a_max": 545.0,
+      "description": "Boiler operating within design parameters",
+      "id": "normal_operation"
+    },
+    {
+      "node_id": "abnormal_high_temp",
+      "node_type": "OperatingMode",
+      "name": "Abnormal - High Steam Temp",
+      "condition": "TE_8332A > 545",
+      "te_8332a_min": 545.0,
+      "te_8332a_max": null,
+      "description": "Steam temperature above normal range; investigate combustion and desuperheater",
+      "id": "abnormal_high_temp"
+    },
+    {
+      "node_id": "abnormal_low_temp",
+      "node_type": "OperatingMode",
+      "name": "Abnormal - Low Steam Temp",
+      "condition": "TE_8332A < 530",
+      "te_8332a_min": null,
+      "te_8332a_max": 530.0,
+      "description": "Steam temperature below normal range; investigate combustion air, load, and steam flow",
+      "id": "abnormal_low_temp"
+    }
+  ],
+  "links": [
+    {
+      "edge_type": "FLOW",
+      "stream": "PrimaryAir",
+      "description": "Atmospheric air drawn into primary fan",
+      "source": "atmosphere",
+      "target": "primary_fan",
+      "key": "FLOW_PrimaryAir_atmosphere__primary_fan"
+    },
+    {
+      "edge_type": "FLOW",
+      "stream": "SecondaryAir",
+      "description": "Atmospheric air drawn into secondary fan",
+      "source": "atmosphere",
+      "target": "secondary_fan",
+      "key": "FLOW_SecondaryAir_atmosphere__secondary_fan"
+    },
+    {
+      "edge_type": "AFFECTS_KPI",
+      "stream": null,
+      "description": "atmosphere is upstream of and influences steam outlet temperature",
+      "source": "atmosphere",
+      "target": "steam_outlet",
+      "key": "AFFECTS_KPI_atmosphere"
+    },
+    {
+      "edge_type": "FLOW",
+      "stream": "Coal",
+      "description": "Coal fed to fluidized bed combustion zone",
+      "source": "coal_feeder",
+      "target": "furnace_lower_hearth",
+      "key": "FLOW_Coal_coal_feeder__furnace_lower_hearth"
+    },
+    {
+      "edge_type": "AFFECTS_KPI",
+      "stream": null,
+      "description": "coal_feeder is upstream of and influences steam outlet temperature",
+      "source": "coal_feeder",
+      "target": "steam_outlet",
+      "key": "AFFECTS_KPI_coal_feeder"
+    },
+    {
+      "edge_type": "FLOW",
+      "stream": "FeedWater",
+      "description": "Cold feedwater enters economizer for preheating",
+      "source": "feedwater_inlet",
+      "target": "economizer",
+      "key": "FLOW_FeedWater_feedwater_inlet__economizer"
+    },
+    {
+      "edge_type": "AFFECTS_KPI",
+      "stream": null,
+      "description": "feedwater_inlet is upstream of and influences steam outlet temperature",
+      "source": "feedwater_inlet",
+      "target": "steam_outlet",
+      "key": "AFFECTS_KPI_feedwater_inlet"
+    },
+    {
+      "edge_type": "FLOW",
+      "stream": "DesuperheatingWater",
+      "description": "Cooling water injection for steam temperature trim",
+      "source": "cooling_water_supply",
+      "target": "primary_desuperheater",
+      "key": "FLOW_DesuperheatingWater_cooling_water_supply__primary_desuperheater"
+    },
+    {
+      "edge_type": "AFFECTS_KPI",
+      "stream": null,
+      "description": "cooling_water_supply is upstream of and influences steam outlet temperature",
+      "source": "cooling_water_supply",
+      "target": "steam_outlet",
+      "key": "AFFECTS_KPI_cooling_water_supply"
+    },
+    {
+      "edge_type": "FLOW",
+      "stream": "PrimaryAir",
+      "description": "Fan outlet to preheater",
+      "source": "primary_fan",
+      "target": "primary_air_preheater",
+      "key": "FLOW_PrimaryAir_primary_fan__primary_air_preheater"
+    },
+    {
+      "edge_type": "PART_OF",
+      "stream": null,
+      "description": "primary_fan is part of primary_air_system",
+      "source": "primary_fan",
+      "target": "primary_air_system",
+      "key": "PART_OF_primary_fan"
+    },
+    {
+      "edge_type": "CONTROLLED_BY",
+      "stream": null,
+      "description": "primary_fan is governed by combustion_air_control_loop",
+      "source": "primary_fan",
+      "target": "combustion_air_control_loop",
+      "key": "CONTROLLED_primary_fan"
+    },
+    {
+      "edge_type": "AFFECTS_KPI",
+      "stream": null,
+      "description": "primary_fan is upstream of and influences steam outlet temperature",
+      "source": "primary_fan",
+      "target": "steam_outlet",
+      "key": "AFFECTS_KPI_primary_fan"
+    },
+    {
+      "edge_type": "FLOW",
+      "stream": "PrimaryAir",
+      "description": "Preheated primary air fluidizes the bed",
+      "source": "primary_air_preheater",
+      "target": "furnace_lower_hearth",
+      "key": "FLOW_PrimaryAir_primary_air_preheater__furnace_lower_hearth"
+    },
+    {
+      "edge_type": "PART_OF",
+      "stream": null,
+      "description": "primary_air_preheater is part of primary_air_system",
+      "source": "primary_air_preheater",
+      "target": "primary_air_system",
+      "key": "PART_OF_primary_air_preheater"
+    },
+    {
+      "edge_type": "AFFECTS_KPI",
+      "stream": null,
+      "description": "primary_air_preheater is upstream of and influences steam outlet temperature",
+      "source": "primary_air_preheater",
+      "target": "steam_outlet",
+      "key": "AFFECTS_KPI_primary_air_preheater"
+    },
+    {
+      "edge_type": "FLOW",
+      "stream": "ReturnAir",
+      "description": "Bed air to left return air chamber",
+      "source": "furnace_lower_hearth",
+      "target": "return_air_chamber_left",
+      "key": "FLOW_ReturnAir_furnace_lower_hearth__return_air_chamber_left"
+    },
+    {
+      "edge_type": "FLOW",
+      "stream": "ReturnAir",
+      "description": "Bed air to right return air chamber",
+      "source": "furnace_lower_hearth",
+      "target": "return_air_chamber_right",
+      "key": "FLOW_ReturnAir_furnace_lower_hearth__return_air_chamber_right"
+    },
+    {
+      "edge_type": "FLOW",
+      "stream": "FlueGas",
+      "description": "Hot combustion gases rise from lower bed zone to upper furnace chamber",
+      "source": "furnace_lower_hearth",
+      "target": "furnace_chamber",
+      "key": "FLOW_FlueGas_furnace_lower_hearth__furnace_chamber"
+    },
+    {
+      "edge_type": "PART_OF",
+      "stream": null,
+      "description": "furnace_lower_hearth is part of combustion_system",
+      "source": "furnace_lower_hearth",
+      "target": "combustion_system",
+      "key": "PART_OF_furnace_lower_hearth"
+    },
+    {
+      "edge_type": "AFFECTS_KPI",
+      "stream": null,
+      "description": "furnace_lower_hearth is upstream of and influences steam outlet temperature",
+      "source": "furnace_lower_hearth",
+      "target": "steam_outlet",
+      "key": "AFFECTS_KPI_furnace_lower_hearth"
+    },
+    {
+      "edge_type": "FLOW",
+      "stream": "ReturnAir",
+      "description": "Left return air back to lower bed",
+      "source": "return_air_chamber_left",
+      "target": "furnace_lower_hearth",
+      "key": "FLOW_ReturnAir_return_air_chamber_left__furnace_lower_hearth"
+    },
+    {
+      "edge_type": "PART_OF",
+      "stream": null,
+      "description": "return_air_chamber_left is part of primary_air_system",
+      "source": "return_air_chamber_left",
+      "target": "primary_air_system",
+      "key": "PART_OF_return_air_chamber_left"
+    },
+    {
+      "edge_type": "SYMMETRIC_PAIR",
+      "stream": null,
+      "description": "return_air_chamber_left and return_air_chamber_right are symmetric left/right duplicates",
+      "source": "return_air_chamber_left",
+      "target": "return_air_chamber_right",
+      "key": "SYM_return_air_chamber_left__return_air_chamber_right"
+    },
+    {
+      "edge_type": "AFFECTS_KPI",
+      "stream": null,
+      "description": "return_air_chamber_left is upstream of and influences steam outlet temperature",
+      "source": "return_air_chamber_left",
+      "target": "steam_outlet",
+      "key": "AFFECTS_KPI_return_air_chamber_left"
+    },
+    {
+      "edge_type": "FLOW",
+      "stream": "ReturnAir",
+      "description": "Right return air back to lower bed",
+      "source": "return_air_chamber_right",
+      "target": "furnace_lower_hearth",
+      "key": "FLOW_ReturnAir_return_air_chamber_right__furnace_lower_hearth"
+    },
+    {
+      "edge_type": "PART_OF",
+      "stream": null,
+      "description": "return_air_chamber_right is part of primary_air_system",
+      "source": "return_air_chamber_right",
+      "target": "primary_air_system",
+      "key": "PART_OF_return_air_chamber_right"
+    },
+    {
+      "edge_type": "SYMMETRIC_PAIR",
+      "stream": null,
+      "description": "return_air_chamber_left and return_air_chamber_right are symmetric left/right duplicates",
+      "source": "return_air_chamber_right",
+      "target": "return_air_chamber_left",
+      "key": "SYM_return_air_chamber_right__return_air_chamber_left"
+    },
+    {
+      "edge_type": "AFFECTS_KPI",
+      "stream": null,
+      "description": "return_air_chamber_right is upstream of and influences steam outlet temperature",
+      "source": "return_air_chamber_right",
+      "target": "steam_outlet",
+      "key": "AFFECTS_KPI_return_air_chamber_right"
+    },
+    {
+      "edge_type": "FLOW",
+      "stream": "SecondaryAir",
+      "description": "Fan outlet to preheater",
+      "source": "secondary_fan",
+      "target": "secondary_air_preheater",
+      "key": "FLOW_SecondaryAir_secondary_fan__secondary_air_preheater"
+    },
+    {
+      "edge_type": "PART_OF",
+      "stream": null,
+      "description": "secondary_fan is part of secondary_air_system",
+      "source": "secondary_fan",
+      "target": "secondary_air_system",
+      "key": "PART_OF_secondary_fan"
+    },
+    {
+      "edge_type": "CONTROLLED_BY",
+      "stream": null,
+      "description": "secondary_fan is governed by combustion_air_control_loop",
+      "source": "secondary_fan",
+      "target": "combustion_air_control_loop",
+      "key": "CONTROLLED_secondary_fan"
+    },
+    {
+      "edge_type": "AFFECTS_KPI",
+      "stream": null,
+      "description": "secondary_fan is upstream of and influences steam outlet temperature",
+      "source": "secondary_fan",
+      "target": "steam_outlet",
+      "key": "AFFECTS_KPI_secondary_fan"
+    },
+    {
+      "edge_type": "FLOW",
+      "stream": "SecondaryAir",
+      "description": "Preheated secondary air to upper furnace (staged combustion)",
+      "source": "secondary_air_preheater",
+      "target": "furnace_chamber",
+      "key": "FLOW_SecondaryAir_secondary_air_preheater__furnace_chamber"
+    },
+    {
+      "edge_type": "PART_OF",
+      "stream": null,
+      "description": "secondary_air_preheater is part of secondary_air_system",
+      "source": "secondary_air_preheater",
+      "target": "secondary_air_system",
+      "key": "PART_OF_secondary_air_preheater"
+    },
+    {
+      "edge_type": "AFFECTS_KPI",
+      "stream": null,
+      "description": "secondary_air_preheater is upstream of and influences steam outlet temperature",
+      "source": "secondary_air_preheater",
+      "target": "steam_outlet",
+      "key": "AFFECTS_KPI_secondary_air_preheater"
+    },
+    {
+      "edge_type": "FLOW",
+      "stream": "FlueGas",
+      "description": "Hot flue gas + solids exit upper furnace (left leg)",
+      "source": "furnace_chamber",
+      "target": "cyclone_separator_left",
+      "key": "FLOW_FlueGas_furnace_chamber__cyclone_separator_left"
+    },
+    {
+      "edge_type": "FLOW",
+      "stream": "FlueGas",
+      "description": "Hot flue gas + solids exit upper furnace (right leg)",
+      "source": "furnace_chamber",
+      "target": "cyclone_separator_right",
+      "key": "FLOW_FlueGas_furnace_chamber__cyclone_separator_right"
+    },
+    {
+      "edge_type": "PART_OF",
+      "stream": null,
+      "description": "furnace_chamber is part of combustion_system",
+      "source": "furnace_chamber",
+      "target": "combustion_system",
+      "key": "PART_OF_furnace_chamber"
+    },
+    {
+      "edge_type": "AFFECTS_KPI",
+      "stream": null,
+      "description": "furnace_chamber is upstream of and influences steam outlet temperature",
+      "source": "furnace_chamber",
+      "target": "steam_outlet",
+      "key": "AFFECTS_KPI_furnace_chamber"
+    },
+    {
+      "edge_type": "FLOW",
+      "stream": "FlueGas",
+      "description": "Cleaned flue gas after left cyclone separation",
+      "source": "cyclone_separator_left",
+      "target": "economizer",
+      "key": "FLOW_FlueGas_cyclone_separator_left__economizer"
+    },
+    {
+      "edge_type": "FLOW",
+      "stream": "Solids",
+      "description": "Captured solids returned to bed (left CFB recirculation loop)",
+      "source": "cyclone_separator_left",
+      "target": "furnace_lower_hearth",
+      "key": "FLOW_Solids_cyclone_separator_left__furnace_lower_hearth"
+    },
+    {
+      "edge_type": "PART_OF",
+      "stream": null,
+      "description": "cyclone_separator_left is part of flue_gas_system",
+      "source": "cyclone_separator_left",
+      "target": "flue_gas_system",
+      "key": "PART_OF_cyclone_separator_left"
+    },
+    {
+      "edge_type": "SYMMETRIC_PAIR",
+      "stream": null,
+      "description": "cyclone_separator_left and cyclone_separator_right are symmetric left/right duplicates",
+      "source": "cyclone_separator_left",
+      "target": "cyclone_separator_right",
+      "key": "SYM_cyclone_separator_left__cyclone_separator_right"
+    },
+    {
+      "edge_type": "AFFECTS_KPI",
+      "stream": null,
+      "description": "cyclone_separator_left is upstream of and influences steam outlet temperature",
+      "source": "cyclone_separator_left",
+      "target": "steam_outlet",
+      "key": "AFFECTS_KPI_cyclone_separator_left"
+    },
+    {
+      "edge_type": "FLOW",
+      "stream": "FlueGas",
+      "description": "Cleaned flue gas after right cyclone separation",
+      "source": "cyclone_separator_right",
+      "target": "economizer",
+      "key": "FLOW_FlueGas_cyclone_separator_right__economizer"
+    },
+    {
+      "edge_type": "FLOW",
+      "stream": "Solids",
+      "description": "Captured solids returned to bed (right CFB recirculation loop)",
+      "source": "cyclone_separator_right",
+      "target": "furnace_lower_hearth",
+      "key": "FLOW_Solids_cyclone_separator_right__furnace_lower_hearth"
+    },
+    {
+      "edge_type": "PART_OF",
+      "stream": null,
+      "description": "cyclone_separator_right is part of flue_gas_system",
+      "source": "cyclone_separator_right",
+      "target": "flue_gas_system",
+      "key": "PART_OF_cyclone_separator_right"
+    },
+    {
+      "edge_type": "SYMMETRIC_PAIR",
+      "stream": null,
+      "description": "cyclone_separator_left and cyclone_separator_right are symmetric left/right duplicates",
+      "source": "cyclone_separator_right",
+      "target": "cyclone_separator_left",
+      "key": "SYM_cyclone_separator_right__cyclone_separator_left"
+    },
+    {
+      "edge_type": "AFFECTS_KPI",
+      "stream": null,
+      "description": "cyclone_separator_right is upstream of and influences steam outlet temperature",
+      "source": "cyclone_separator_right",
+      "target": "steam_outlet",
+      "key": "AFFECTS_KPI_cyclone_separator_right"
+    },
+    {
+      "edge_type": "FLOW",
+      "stream": "FlueGas",
+      "description": "Cooled flue gas pulled by induced draft fan",
+      "source": "economizer",
+      "target": "induced_draft_fan",
+      "key": "FLOW_FlueGas_economizer__induced_draft_fan"
+    },
+    {
+      "edge_type": "FLOW",
+      "stream": "FeedWater",
+      "description": "Preheated feedwater delivered to steam drum",
+      "source": "economizer",
+      "target": "steam_drum",
+      "key": "FLOW_FeedWater_economizer__steam_drum"
+    },
+    {
+      "edge_type": "PART_OF",
+      "stream": null,
+      "description": "economizer is part of flue_gas_system",
+      "source": "economizer",
+      "target": "flue_gas_system",
+      "key": "PART_OF_economizer"
+    },
+    {
+      "edge_type": "AFFECTS_KPI",
+      "stream": null,
+      "description": "economizer is upstream of and influences steam outlet temperature",
+      "source": "economizer",
+      "target": "steam_outlet",
+      "key": "AFFECTS_KPI_economizer"
+    },
+    {
+      "edge_type": "FLOW",
+      "stream": "FlueGas",
+      "description": "Flue gas exhausted through stack to atmosphere",
+      "source": "induced_draft_fan",
+      "target": "chimney",
+      "key": "FLOW_FlueGas_induced_draft_fan__chimney"
+    },
+    {
+      "edge_type": "PART_OF",
+      "stream": null,
+      "description": "induced_draft_fan is part of draft_system",
+      "source": "induced_draft_fan",
+      "target": "draft_system",
+      "key": "PART_OF_induced_draft_fan"
+    },
+    {
+      "edge_type": "CONTROLLED_BY",
+      "stream": null,
+      "description": "induced_draft_fan is governed by furnace_draft_control_loop",
+      "source": "induced_draft_fan",
+      "target": "furnace_draft_control_loop",
+      "key": "CONTROLLED_induced_draft_fan"
+    },
+    {
+      "edge_type": "PART_OF",
+      "stream": null,
+      "description": "chimney is part of draft_system",
+      "source": "chimney",
+      "target": "draft_system",
+      "key": "PART_OF_chimney"
+    },
+    {
+      "edge_type": "FLOW",
+      "stream": "Steam",
+      "description": "Saturated steam exits drum",
+      "source": "steam_drum",
+      "target": "low_temp_superheater",
+      "key": "FLOW_Steam_steam_drum__low_temp_superheater"
+    },
+    {
+      "edge_type": "PART_OF",
+      "stream": null,
+      "description": "steam_drum is part of steam_water_system",
+      "source": "steam_drum",
+      "target": "steam_water_system",
+      "key": "PART_OF_steam_drum"
+    },
+    {
+      "edge_type": "AFFECTS_KPI",
+      "stream": null,
+      "description": "steam_drum is upstream of and influences steam outlet temperature",
+      "source": "steam_drum",
+      "target": "steam_outlet",
+      "key": "AFFECTS_KPI_steam_drum"
+    },
+    {
+      "edge_type": "FLOW",
+      "stream": "Steam",
+      "description": "Partially superheated steam to desuperheater",
+      "source": "low_temp_superheater",
+      "target": "primary_desuperheater",
+      "key": "FLOW_Steam_low_temp_superheater__primary_desuperheater"
+    },
+    {
+      "edge_type": "PART_OF",
+      "stream": null,
+      "description": "low_temp_superheater is part of steam_water_system",
+      "source": "low_temp_superheater",
+      "target": "steam_water_system",
+      "key": "PART_OF_low_temp_superheater"
+    },
+    {
+      "edge_type": "AFFECTS_KPI",
+      "stream": null,
+      "description": "low_temp_superheater is upstream of and influences steam outlet temperature",
+      "source": "low_temp_superheater",
+      "target": "steam_outlet",
+      "key": "AFFECTS_KPI_low_temp_superheater"
+    },
+    {
+      "edge_type": "FLOW",
+      "stream": "Steam",
+      "description": "Temperature-trimmed steam to final superheater",
+      "source": "primary_desuperheater",
+      "target": "high_temp_superheater",
+      "key": "FLOW_Steam_primary_desuperheater__high_temp_superheater"
+    },
+    {
+      "edge_type": "PART_OF",
+      "stream": null,
+      "description": "primary_desuperheater is part of steam_water_system",
+      "source": "primary_desuperheater",
+      "target": "steam_water_system",
+      "key": "PART_OF_primary_desuperheater"
+    },
+    {
+      "edge_type": "CONTROLLED_BY",
+      "stream": null,
+      "description": "primary_desuperheater is governed by steam_temp_control_loop",
+      "source": "primary_desuperheater",
+      "target": "steam_temp_control_loop",
+      "key": "CONTROLLED_primary_desuperheater"
+    },
+    {
+      "edge_type": "AFFECTS_KPI",
+      "stream": null,
+      "description": "primary_desuperheater is upstream of and influences steam outlet temperature",
+      "source": "primary_desuperheater",
+      "target": "steam_outlet",
+      "key": "AFFECTS_KPI_primary_desuperheater"
+    },
+    {
+      "edge_type": "FLOW",
+      "stream": "Steam",
+      "description": "Fully superheated steam to process",
+      "source": "high_temp_superheater",
+      "target": "steam_outlet",
+      "key": "FLOW_Steam_high_temp_superheater__steam_outlet"
+    },
+    {
+      "edge_type": "PART_OF",
+      "stream": null,
+      "description": "high_temp_superheater is part of steam_water_system",
+      "source": "high_temp_superheater",
+      "target": "steam_water_system",
+      "key": "PART_OF_high_temp_superheater"
+    },
+    {
+      "edge_type": "PART_OF",
+      "stream": null,
+      "description": "steam_outlet is part of steam_water_system",
+      "source": "steam_outlet",
+      "target": "steam_water_system",
+      "key": "PART_OF_steam_outlet"
+    },
+    {
+      "edge_type": "PART_OF",
+      "stream": null,
+      "description": "PT_8313A is part of furnace_chamber",
+      "source": "PT_8313A",
+      "target": "furnace_chamber",
+      "key": "PART_OF_PT_8313A"
+    },
+    {
+      "edge_type": "FEEDBACK_TO",
+      "stream": null,
+      "description": "PT_8313A provides feedback to furnace_draft_control_loop",
+      "source": "PT_8313A",
+      "target": "furnace_draft_control_loop",
+      "key": "FEEDBACK_PT_8313A__furnace_draft_control_loop"
+    },
+    {
+      "edge_type": "AFFECTS_KPI",
+      "stream": null,
+      "description": "Sensor PT_8313A monitors equipment upstream of steam outlet",
+      "source": "PT_8313A",
+      "target": "steam_outlet",
+      "key": "AFFECTS_KPI_PT_8313A"
+    },
+    {
+      "edge_type": "PART_OF",
+      "stream": null,
+      "description": "PT_8313B is part of furnace_chamber",
+      "source": "PT_8313B",
+      "target": "furnace_chamber",
+      "key": "PART_OF_PT_8313B"
+    },
+    {
+      "edge_type": "FEEDBACK_TO",
+      "stream": null,
+      "description": "PT_8313B provides feedback to furnace_draft_control_loop",
+      "source": "PT_8313B",
+      "target": "furnace_draft_control_loop",
+      "key": "FEEDBACK_PT_8313B__furnace_draft_control_loop"
+    },
+    {
+      "edge_type": "AFFECTS_KPI",
+      "stream": null,
+      "description": "Sensor PT_8313B monitors equipment upstream of steam outlet",
+      "source": "PT_8313B",
+      "target": "steam_outlet",
+      "key": "AFFECTS_KPI_PT_8313B"
+    },
+    {
+      "edge_type": "PART_OF",
+      "stream": null,
+      "description": "PT_8313C is part of furnace_chamber",
+      "source": "PT_8313C",
+      "target": "furnace_chamber",
+      "key": "PART_OF_PT_8313C"
+    },
+    {
+      "edge_type": "FEEDBACK_TO",
+      "stream": null,
+      "description": "PT_8313C provides feedback to furnace_draft_control_loop",
+      "source": "PT_8313C",
+      "target": "furnace_draft_control_loop",
+      "key": "FEEDBACK_PT_8313C__furnace_draft_control_loop"
+    },
+    {
+      "edge_type": "AFFECTS_KPI",
+      "stream": null,
+      "description": "Sensor PT_8313C monitors equipment upstream of steam outlet",
+      "source": "PT_8313C",
+      "target": "steam_outlet",
+      "key": "AFFECTS_KPI_PT_8313C"
+    },
+    {
+      "edge_type": "PART_OF",
+      "stream": null,
+      "description": "PT_8313D is part of furnace_chamber",
+      "source": "PT_8313D",
+      "target": "furnace_chamber",
+      "key": "PART_OF_PT_8313D"
+    },
+    {
+      "edge_type": "FEEDBACK_TO",
+      "stream": null,
+      "description": "PT_8313D provides feedback to furnace_draft_control_loop",
+      "source": "PT_8313D",
+      "target": "furnace_draft_control_loop",
+      "key": "FEEDBACK_PT_8313D__furnace_draft_control_loop"
+    },
+    {
+      "edge_type": "AFFECTS_KPI",
+      "stream": null,
+      "description": "Sensor PT_8313D monitors equipment upstream of steam outlet",
+      "source": "PT_8313D",
+      "target": "steam_outlet",
+      "key": "AFFECTS_KPI_PT_8313D"
+    },
+    {
+      "edge_type": "PART_OF",
+      "stream": null,
+      "description": "PT_8313E is part of furnace_chamber",
+      "source": "PT_8313E",
+      "target": "furnace_chamber",
+      "key": "PART_OF_PT_8313E"
+    },
+    {
+      "edge_type": "FEEDBACK_TO",
+      "stream": null,
+      "description": "PT_8313E provides feedback to furnace_draft_control_loop",
+      "source": "PT_8313E",
+      "target": "furnace_draft_control_loop",
+      "key": "FEEDBACK_PT_8313E__furnace_draft_control_loop"
+    },
+    {
+      "edge_type": "AFFECTS_KPI",
+      "stream": null,
+      "description": "Sensor PT_8313E monitors equipment upstream of steam outlet",
+      "source": "PT_8313E",
+      "target": "steam_outlet",
+      "key": "AFFECTS_KPI_PT_8313E"
+    },
+    {
+      "edge_type": "PART_OF",
+      "stream": null,
+      "description": "PT_8313F is part of furnace_chamber",
+      "source": "PT_8313F",
+      "target": "furnace_chamber",
+      "key": "PART_OF_PT_8313F"
+    },
+    {
+      "edge_type": "FEEDBACK_TO",
+      "stream": null,
+      "description": "PT_8313F provides feedback to furnace_draft_control_loop",
+      "source": "PT_8313F",
+      "target": "furnace_draft_control_loop",
+      "key": "FEEDBACK_PT_8313F__furnace_draft_control_loop"
+    },
+    {
+      "edge_type": "AFFECTS_KPI",
+      "stream": null,
+      "description": "Sensor PT_8313F monitors equipment upstream of steam outlet",
+      "source": "PT_8313F",
+      "target": "steam_outlet",
+      "key": "AFFECTS_KPI_PT_8313F"
+    },
+    {
+      "edge_type": "PART_OF",
+      "stream": null,
+      "description": "PTCA_8322A is part of steam_drum",
+      "source": "PTCA_8322A",
+      "target": "steam_drum",
+      "key": "PART_OF_PTCA_8322A"
+    },
+    {
+      "edge_type": "AFFECTS_KPI",
+      "stream": null,
+      "description": "Sensor PTCA_8322A monitors equipment upstream of steam outlet",
+      "source": "PTCA_8322A",
+      "target": "steam_outlet",
+      "key": "AFFECTS_KPI_PTCA_8322A"
+    },
+    {
+      "edge_type": "PART_OF",
+      "stream": null,
+      "description": "PTCA_8324 is part of steam_outlet",
+      "source": "PTCA_8324",
+      "target": "steam_outlet",
+      "key": "PART_OF_PTCA_8324"
+    },
+    {
+      "edge_type": "PART_OF",
+      "stream": null,
+      "description": "TE_8319A is part of economizer",
+      "source": "TE_8319A",
+      "target": "economizer",
+      "key": "PART_OF_TE_8319A"
+    },
+    {
+      "edge_type": "SYMMETRIC_PAIR",
+      "stream": null,
+      "description": "TE_8319A and TE_8319B are symmetric left/right duplicates",
+      "source": "TE_8319A",
+      "target": "TE_8319B",
+      "key": "SYM_TE_8319A__TE_8319B"
+    },
+    {
+      "edge_type": "AFFECTS_KPI",
+      "stream": null,
+      "description": "Sensor TE_8319A monitors equipment upstream of steam outlet",
+      "source": "TE_8319A",
+      "target": "steam_outlet",
+      "key": "AFFECTS_KPI_TE_8319A"
+    },
+    {
+      "edge_type": "PART_OF",
+      "stream": null,
+      "description": "TE_8319B is part of economizer",
+      "source": "TE_8319B",
+      "target": "economizer",
+      "key": "PART_OF_TE_8319B"
+    },
+    {
+      "edge_type": "SYMMETRIC_PAIR",
+      "stream": null,
+      "description": "TE_8319A and TE_8319B are symmetric left/right duplicates",
+      "source": "TE_8319B",
+      "target": "TE_8319A",
+      "key": "SYM_TE_8319B__TE_8319A"
+    },
+    {
+      "edge_type": "AFFECTS_KPI",
+      "stream": null,
+      "description": "Sensor TE_8319B monitors equipment upstream of steam outlet",
+      "source": "TE_8319B",
+      "target": "steam_outlet",
+      "key": "AFFECTS_KPI_TE_8319B"
+    },
+    {
+      "edge_type": "PART_OF",
+      "stream": null,
+      "description": "TE_8313B is part of furnace_chamber",
+      "source": "TE_8313B",
+      "target": "furnace_chamber",
+      "key": "PART_OF_TE_8313B"
+    },
+    {
+      "edge_type": "AFFECTS_KPI",
+      "stream": null,
+      "description": "Sensor TE_8313B monitors equipment upstream of steam outlet",
+      "source": "TE_8313B",
+      "target": "steam_outlet",
+      "key": "AFFECTS_KPI_TE_8313B"
+    },
+    {
+      "edge_type": "PART_OF",
+      "stream": null,
+      "description": "TE_8303 is part of primary_air_preheater",
+      "source": "TE_8303",
+      "target": "primary_air_preheater",
+      "key": "PART_OF_TE_8303"
+    },
+    {
+      "edge_type": "AFFECTS_KPI",
+      "stream": null,
+      "description": "Sensor TE_8303 monitors equipment upstream of steam outlet",
+      "source": "TE_8303",
+      "target": "steam_outlet",
+      "key": "AFFECTS_KPI_TE_8303"
+    },
+    {
+      "edge_type": "PART_OF",
+      "stream": null,
+      "description": "TE_8304 is part of secondary_air_preheater",
+      "source": "TE_8304",
+      "target": "secondary_air_preheater",
+      "key": "PART_OF_TE_8304"
+    },
+    {
+      "edge_type": "AFFECTS_KPI",
+      "stream": null,
+      "description": "Sensor TE_8304 monitors equipment upstream of steam outlet",
+      "source": "TE_8304",
+      "target": "steam_outlet",
+      "key": "AFFECTS_KPI_TE_8304"
+    },
+    {
+      "edge_type": "PART_OF",
+      "stream": null,
+      "description": "TE_8332A is part of steam_outlet",
+      "source": "TE_8332A",
+      "target": "steam_outlet",
+      "key": "PART_OF_TE_8332A"
+    },
+    {
+      "edge_type": "FEEDBACK_TO",
+      "stream": null,
+      "description": "TE_8332A provides feedback to steam_temp_control_loop",
+      "source": "TE_8332A",
+      "target": "steam_temp_control_loop",
+      "key": "FEEDBACK_TE_8332A__steam_temp_control_loop"
+    },
+    {
+      "edge_type": "PART_OF",
+      "stream": null,
+      "description": "TV_8329ZC is part of primary_desuperheater",
+      "source": "TV_8329ZC",
+      "target": "primary_desuperheater",
+      "key": "PART_OF_TV_8329ZC"
+    },
+    {
+      "edge_type": "AFFECTS_KPI",
+      "stream": null,
+      "description": "Sensor TV_8329ZC monitors equipment upstream of steam outlet",
+      "source": "TV_8329ZC",
+      "target": "steam_outlet",
+      "key": "AFFECTS_KPI_TV_8329ZC"
+    },
+    {
+      "edge_type": "PART_OF",
+      "stream": null,
+      "description": "FT_8301 is part of primary_fan",
+      "source": "FT_8301",
+      "target": "primary_fan",
+      "key": "PART_OF_FT_8301"
+    },
+    {
+      "edge_type": "AFFECTS_KPI",
+      "stream": null,
+      "description": "Sensor FT_8301 monitors equipment upstream of steam outlet",
+      "source": "FT_8301",
+      "target": "steam_outlet",
+      "key": "AFFECTS_KPI_FT_8301"
+    },
+    {
+      "edge_type": "PART_OF",
+      "stream": null,
+      "description": "FT_8302 is part of secondary_fan",
+      "source": "FT_8302",
+      "target": "secondary_fan",
+      "key": "PART_OF_FT_8302"
+    },
+    {
+      "edge_type": "AFFECTS_KPI",
+      "stream": null,
+      "description": "Sensor FT_8302 monitors equipment upstream of steam outlet",
+      "source": "FT_8302",
+      "target": "steam_outlet",
+      "key": "AFFECTS_KPI_FT_8302"
+    },
+    {
+      "edge_type": "PART_OF",
+      "stream": null,
+      "description": "FT_8306A is part of return_air_chamber_left",
+      "source": "FT_8306A",
+      "target": "return_air_chamber_left",
+      "key": "PART_OF_FT_8306A"
+    },
+    {
+      "edge_type": "SYMMETRIC_PAIR",
+      "stream": null,
+      "description": "FT_8306A and FT_8306B are symmetric left/right duplicates",
+      "source": "FT_8306A",
+      "target": "FT_8306B",
+      "key": "SYM_FT_8306A__FT_8306B"
+    },
+    {
+      "edge_type": "AFFECTS_KPI",
+      "stream": null,
+      "description": "Sensor FT_8306A monitors equipment upstream of steam outlet",
+      "source": "FT_8306A",
+      "target": "steam_outlet",
+      "key": "AFFECTS_KPI_FT_8306A"
+    },
+    {
+      "edge_type": "PART_OF",
+      "stream": null,
+      "description": "FT_8306B is part of return_air_chamber_right",
+      "source": "FT_8306B",
+      "target": "return_air_chamber_right",
+      "key": "PART_OF_FT_8306B"
+    },
+    {
+      "edge_type": "SYMMETRIC_PAIR",
+      "stream": null,
+      "description": "FT_8306A and FT_8306B are symmetric left/right duplicates",
+      "source": "FT_8306B",
+      "target": "FT_8306A",
+      "key": "SYM_FT_8306B__FT_8306A"
+    },
+    {
+      "edge_type": "AFFECTS_KPI",
+      "stream": null,
+      "description": "Sensor FT_8306B monitors equipment upstream of steam outlet",
+      "source": "FT_8306B",
+      "target": "steam_outlet",
+      "key": "AFFECTS_KPI_FT_8306B"
+    },
+    {
+      "edge_type": "PART_OF",
+      "stream": null,
+      "description": "AIR_8301A is part of economizer",
+      "source": "AIR_8301A",
+      "target": "economizer",
+      "key": "PART_OF_AIR_8301A"
+    },
+    {
+      "edge_type": "FEEDBACK_TO",
+      "stream": null,
+      "description": "AIR_8301A provides feedback to combustion_air_control_loop",
+      "source": "AIR_8301A",
+      "target": "combustion_air_control_loop",
+      "key": "FEEDBACK_AIR_8301A__combustion_air_control_loop"
+    },
+    {
+      "edge_type": "SYMMETRIC_PAIR",
+      "stream": null,
+      "description": "AIR_8301A and AIR_8301B are symmetric left/right duplicates",
+      "source": "AIR_8301A",
+      "target": "AIR_8301B",
+      "key": "SYM_AIR_8301A__AIR_8301B"
+    },
+    {
+      "edge_type": "AFFECTS_KPI",
+      "stream": null,
+      "description": "Sensor AIR_8301A monitors equipment upstream of steam outlet",
+      "source": "AIR_8301A",
+      "target": "steam_outlet",
+      "key": "AFFECTS_KPI_AIR_8301A"
+    },
+    {
+      "edge_type": "PART_OF",
+      "stream": null,
+      "description": "AIR_8301B is part of economizer",
+      "source": "AIR_8301B",
+      "target": "economizer",
+      "key": "PART_OF_AIR_8301B"
+    },
+    {
+      "edge_type": "FEEDBACK_TO",
+      "stream": null,
+      "description": "AIR_8301B provides feedback to combustion_air_control_loop",
+      "source": "AIR_8301B",
+      "target": "combustion_air_control_loop",
+      "key": "FEEDBACK_AIR_8301B__combustion_air_control_loop"
+    },
+    {
+      "edge_type": "SYMMETRIC_PAIR",
+      "stream": null,
+      "description": "AIR_8301A and AIR_8301B are symmetric left/right duplicates",
+      "source": "AIR_8301B",
+      "target": "AIR_8301A",
+      "key": "SYM_AIR_8301B__AIR_8301A"
+    },
+    {
+      "edge_type": "AFFECTS_KPI",
+      "stream": null,
+      "description": "Sensor AIR_8301B monitors equipment upstream of steam outlet",
+      "source": "AIR_8301B",
+      "target": "steam_outlet",
+      "key": "AFFECTS_KPI_AIR_8301B"
+    },
+    {
+      "edge_type": "PART_OF",
+      "stream": null,
+      "description": "YFJ3_AI is part of induced_draft_fan",
+      "source": "YFJ3_AI",
+      "target": "induced_draft_fan",
+      "key": "PART_OF_YFJ3_AI"
+    },
+    {
+      "edge_type": "PART_OF",
+      "stream": null,
+      "description": "YFJ3_ZD1 is part of induced_draft_fan",
+      "source": "YFJ3_ZD1",
+      "target": "induced_draft_fan",
+      "key": "PART_OF_YFJ3_ZD1"
+    },
+    {
+      "edge_type": "SYMMETRIC_PAIR",
+      "stream": null,
+      "description": "YFJ3_ZD1 and YFJ3_ZD2 are symmetric left/right duplicates",
+      "source": "YFJ3_ZD1",
+      "target": "YFJ3_ZD2",
+      "key": "SYM_YFJ3_ZD1__YFJ3_ZD2"
+    },
+    {
+      "edge_type": "PART_OF",
+      "stream": null,
+      "description": "YFJ3_ZD2 is part of induced_draft_fan",
+      "source": "YFJ3_ZD2",
+      "target": "induced_draft_fan",
+      "key": "PART_OF_YFJ3_ZD2"
+    },
+    {
+      "edge_type": "SYMMETRIC_PAIR",
+      "stream": null,
+      "description": "YFJ3_ZD1 and YFJ3_ZD2 are symmetric left/right duplicates",
+      "source": "YFJ3_ZD2",
+      "target": "YFJ3_ZD1",
+      "key": "SYM_YFJ3_ZD2__YFJ3_ZD1"
+    },
+    {
+      "edge_type": "PART_OF",
+      "stream": null,
+      "description": "SXLTCYZ is part of furnace_lower_hearth",
+      "source": "SXLTCYZ",
+      "target": "furnace_lower_hearth",
+      "key": "PART_OF_SXLTCYZ"
+    },
+    {
+      "edge_type": "SYMMETRIC_PAIR",
+      "stream": null,
+      "description": "SXLTCYZ and SXLTCYY are symmetric left/right duplicates",
+      "source": "SXLTCYZ",
+      "target": "SXLTCYY",
+      "key": "SYM_SXLTCYZ__SXLTCYY"
+    },
+    {
+      "edge_type": "AFFECTS_KPI",
+      "stream": null,
+      "description": "Sensor SXLTCYZ monitors equipment upstream of steam outlet",
+      "source": "SXLTCYZ",
+      "target": "steam_outlet",
+      "key": "AFFECTS_KPI_SXLTCYZ"
+    },
+    {
+      "edge_type": "PART_OF",
+      "stream": null,
+      "description": "SXLTCYY is part of furnace_lower_hearth",
+      "source": "SXLTCYY",
+      "target": "furnace_lower_hearth",
+      "key": "PART_OF_SXLTCYY"
+    },
+    {
+      "edge_type": "SYMMETRIC_PAIR",
+      "stream": null,
+      "description": "SXLTCYZ and SXLTCYY are symmetric left/right duplicates",
+      "source": "SXLTCYY",
+      "target": "SXLTCYZ",
+      "key": "SYM_SXLTCYY__SXLTCYZ"
+    },
+    {
+      "edge_type": "AFFECTS_KPI",
+      "stream": null,
+      "description": "Sensor SXLTCYY monitors equipment upstream of steam outlet",
+      "source": "SXLTCYY",
+      "target": "steam_outlet",
+      "key": "AFFECTS_KPI_SXLTCYY"
+    },
+    {
+      "edge_type": "PART_OF",
+      "stream": null,
+      "description": "ZCLCCY is part of cyclone_separator_left",
+      "source": "ZCLCCY",
+      "target": "cyclone_separator_left",
+      "key": "PART_OF_ZCLCCY"
+    },
+    {
+      "edge_type": "SYMMETRIC_PAIR",
+      "stream": null,
+      "description": "ZCLCCY and YCLCCY are symmetric left/right duplicates",
+      "source": "ZCLCCY",
+      "target": "YCLCCY",
+      "key": "SYM_ZCLCCY__YCLCCY"
+    },
+    {
+      "edge_type": "AFFECTS_KPI",
+      "stream": null,
+      "description": "Sensor ZCLCCY monitors equipment upstream of steam outlet",
+      "source": "ZCLCCY",
+      "target": "steam_outlet",
+      "key": "AFFECTS_KPI_ZCLCCY"
+    },
+    {
+      "edge_type": "PART_OF",
+      "stream": null,
+      "description": "YCLCCY is part of cyclone_separator_right",
+      "source": "YCLCCY",
+      "target": "cyclone_separator_right",
+      "key": "PART_OF_YCLCCY"
+    },
+    {
+      "edge_type": "SYMMETRIC_PAIR",
+      "stream": null,
+      "description": "ZCLCCY and YCLCCY are symmetric left/right duplicates",
+      "source": "YCLCCY",
+      "target": "ZCLCCY",
+      "key": "SYM_YCLCCY__ZCLCCY"
+    },
+    {
+      "edge_type": "AFFECTS_KPI",
+      "stream": null,
+      "description": "Sensor YCLCCY monitors equipment upstream of steam outlet",
+      "source": "YCLCCY",
+      "target": "steam_outlet",
+      "key": "AFFECTS_KPI_YCLCCY"
+    },
+    {
+      "edge_type": "PART_OF",
+      "stream": null,
+      "description": "YJJWSLL is part of primary_desuperheater",
+      "source": "YJJWSLL",
+      "target": "primary_desuperheater",
+      "key": "PART_OF_YJJWSLL"
+    },
+    {
+      "edge_type": "AFFECTS_KPI",
+      "stream": null,
+      "description": "Sensor YJJWSLL monitors equipment upstream of steam outlet",
+      "source": "YJJWSLL",
+      "target": "steam_outlet",
+      "key": "AFFECTS_KPI_YJJWSLL"
+    },
+    {
+      "edge_type": "PART_OF",
+      "stream": null,
+      "description": "ZZQBCHLL is part of steam_outlet",
+      "source": "ZZQBCHLL",
+      "target": "steam_outlet",
+      "key": "PART_OF_ZZQBCHLL"
+    },
+    {
+      "edge_type": "ACTUATED_BY",
+      "stream": null,
+      "description": "steam_temp_control_loop actuates via TV_8329ZC",
+      "source": "steam_temp_control_loop",
+      "target": "TV_8329ZC",
+      "key": "ACTUATED_steam_temp_control_loop__TV_8329ZC"
+    },
+    {
+      "edge_type": "ACTUATED_BY",
+      "stream": null,
+      "description": "steam_temp_control_loop actuates via YJJWSLL",
+      "source": "steam_temp_control_loop",
+      "target": "YJJWSLL",
+      "key": "ACTUATED_steam_temp_control_loop__YJJWSLL"
+    },
+    {
+      "edge_type": "AFFECTS_KPI",
+      "stream": null,
+      "description": "steam_temp_control_loop has causal influence on steam outlet temperature",
+      "source": "steam_temp_control_loop",
+      "target": "steam_outlet",
+      "key": "AFFECTS_KPI_steam_temp_control_loop"
+    },
+    {
+      "edge_type": "ACTUATED_BY",
+      "stream": null,
+      "description": "furnace_draft_control_loop actuates via YFJ3_AI",
+      "source": "furnace_draft_control_loop",
+      "target": "YFJ3_AI",
+      "key": "ACTUATED_furnace_draft_control_loop__YFJ3_AI"
+    },
+    {
+      "edge_type": "AFFECTS_KPI",
+      "stream": null,
+      "description": "furnace_draft_control_loop has causal influence on steam outlet temperature",
+      "source": "furnace_draft_control_loop",
+      "target": "steam_outlet",
+      "key": "AFFECTS_KPI_furnace_draft_control_loop"
+    },
+    {
+      "edge_type": "ACTUATED_BY",
+      "stream": null,
+      "description": "combustion_air_control_loop actuates via FT_8301",
+      "source": "combustion_air_control_loop",
+      "target": "FT_8301",
+      "key": "ACTUATED_combustion_air_control_loop__FT_8301"
+    },
+    {
+      "edge_type": "ACTUATED_BY",
+      "stream": null,
+      "description": "combustion_air_control_loop actuates via FT_8302",
+      "source": "combustion_air_control_loop",
+      "target": "FT_8302",
+      "key": "ACTUATED_combustion_air_control_loop__FT_8302"
+    },
+    {
+      "edge_type": "AFFECTS_KPI",
+      "stream": null,
+      "description": "combustion_air_control_loop has causal influence on steam outlet temperature",
+      "source": "combustion_air_control_loop",
+      "target": "steam_outlet",
+      "key": "AFFECTS_KPI_combustion_air_control_loop"
+    }
+  ],
+  "stream_paths": {
+    "PrimaryAir": [
+      "atmosphere",
+      "primary_fan",
+      "primary_air_preheater",
+      "furnace_lower_hearth",
+      "furnace_chamber"
+    ],
+    "SecondaryAir": [
+      "atmosphere",
+      "secondary_fan",
+      "secondary_air_preheater",
+      "furnace_chamber"
+    ],
+    "ReturnAir": [
+      "furnace_lower_hearth",
+      [
+        "return_air_chamber_left",
+        "return_air_chamber_right"
+      ],
+      "furnace_lower_hearth"
+    ],
+    "FlueGas": [
+      "furnace_chamber",
+      [
+        "cyclone_separator_left",
+        "cyclone_separator_right"
+      ],
+      "economizer",
+      "induced_draft_fan",
+      "chimney"
+    ],
+    "Solids": [
+      [
+        "cyclone_separator_left",
+        "cyclone_separator_right"
+      ],
+      "furnace_lower_hearth"
+    ],
+    "FeedWater": [
+      "feedwater_inlet",
+      "economizer",
+      "steam_drum"
+    ],
+    "Steam": [
+      "steam_drum",
+      "low_temp_superheater",
+      "primary_desuperheater",
+      "high_temp_superheater",
+      "steam_outlet"
+    ],
+    "DesuperheatingWater": [
+      "cooling_water_supply",
+      "primary_desuperheater"
+    ],
+    "Coal": [
+      "coal_feeder",
+      "furnace_lower_hearth"
+    ]
+  },
+  "stream_descriptions": {
+    "PrimaryAir": "Primary combustion air: atmosphere -> primary fan -> preheater -> lower furnace bed",
+    "SecondaryAir": "Secondary combustion air: atmosphere -> secondary fan -> preheater -> upper furnace",
+    "ReturnAir": "Return air recirculation: lower hearth <-> return air chambers (solid transport air)",
+    "FlueGas": "Flue gas exhaust: furnace -> cyclone separators -> economizer -> induced draft fan -> chimney",
+    "Solids": "CFB solid recirculation loop: cyclone separators -> furnace lower hearth (defines CFB operation)",
+    "FeedWater": "Feedwater heating: feedwater supply -> economizer -> steam drum",
+    "Steam": "Steam superheating: steam drum -> low-temp SH -> desuperheater -> high-temp SH -> outlet",
+    "DesuperheatingWater": "Desuperheating cooling water: cooling supply -> primary desuperheater injection",
+    "Coal": "Coal fuel feed: coal feeder -> furnace lower hearth"
+  }
+}
