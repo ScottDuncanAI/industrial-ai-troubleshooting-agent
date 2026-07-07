@@ -346,7 +346,11 @@ def render_markdown(
             label = "LOW"
         lines.append(f"**Confidence:** {label} ({conf})")
         lines.append("")
-        lines.append(fc["text"])
+        # Show the same clean, plain-language root-cause sentence as summary.md.
+        # The full conclusion reasoning is preserved below in the Hypothesis Register.
+        conclusion_text = _strip_rejected_hypotheses(fc["text"])
+        root_cause_sentence, _ = _extract_root_cause_and_chain(conclusion_text)
+        lines.append(root_cause_sentence)
         lines.append("")
         ev = fc.get("evidence_steps", [])
         if ev:
@@ -355,7 +359,9 @@ def render_markdown(
     else:
         non_conf = classified["conclusions"]
         if non_conf:
-            lines.append(non_conf[-1]["text"])
+            conclusion_text = _strip_rejected_hypotheses(non_conf[-1]["text"])
+            root_cause_sentence, _ = _extract_root_cause_and_chain(conclusion_text)
+            lines.append(root_cause_sentence)
             lines.append("")
             lines.append("*(No confidence level was set on the conclusion.)*")
         else:
@@ -566,28 +572,24 @@ def _extract_root_cause_and_chain(text: str) -> tuple[str, list[str]]:
     import re
 
     cleaned = text.strip()
-    for prefix in (
-        "ROOT CAUSE CONCLUSION: ",
-        "ROOT CAUSE CONFIRMED: ",
-        "CAUSE VS. SYMPTOM DETERMINATION: ",
-    ):
-        if cleaned.startswith(prefix):
-            cleaned = cleaned[len(prefix):]
+    # Strip a leading ALL-CAPS label prefix, optionally with a parenthetical, e.g.
+    # "ROOT CAUSE CONCLUSION: ", "ROOT CAUSE CONFIRMED: ",
+    # "CAUSE VS. SYMPTOM DETERMINATION: ", or
+    # "ORIGINATING ROOT CAUSE (MEDIUM confidence, 0.7): ".
+    cleaned = re.sub(r"^[A-Z][A-Z .&/]{3,}(\s*\([^)]*\))?:\s*", "", cleaned)
 
-    # Root cause = first non-list sentence. Stop at the first ". " that is NOT
-    # immediately followed by a digit+dot (which would be a numbered list continuation).
+    # Root cause = the first *declarative* sentence. Split into sentences at ., ?, or !
+    # that are followed by whitespace or end-of-string (requiring trailing whitespace
+    # avoids splitting decimals like "9.4"). Skip any leading question sentences so a
+    # question can never appear in the Root Cause section, and skip bare list markers.
     root_cause = cleaned
-    search_start = 0
-    while True:
-        idx = cleaned.find(". ", search_start)
-        if idx < 1 or idx >= len(cleaned) - 2:
-            break
-        after = cleaned[idx + 2:]
-        # Skip if the next non-space chars look like "1. " (continuation of numbered list)
-        if re.match(r"\d+\.", after.lstrip()):
-            search_start = idx + 2
+    for m in re.finditer(r".*?[.?!](?=\s|$)", cleaned, re.DOTALL):
+        s = m.group().strip()
+        if not s or s.endswith("?"):
             continue
-        root_cause = cleaned[: idx + 1].strip()
+        if re.match(r"^\(?\d+[.)]\s*$", s):
+            continue
+        root_cause = s
         break
 
     chain_items: list[str] = []
@@ -600,21 +602,26 @@ def _extract_root_cause_and_chain(text: str) -> tuple[str, list[str]]:
             if item:
                 chain_items.append(item)
 
-    # Strategy 2: "1. ", "2. " style items on their own lines
+    # Strategy 2: "1. ", "2. " numbered markers, whether inline or on their own lines.
+    # Require whitespace after the dot so decimals like "9.4" are never treated as markers.
     if not chain_items:
-        numbered = re.split(r"\n\d+\.\s+", "\n" + cleaned)
-        if len(numbered) > 1:
-            for part in numbered[1:]:
+        marker = re.compile(r"(?:(?<=\s)|^)\d+\.\s+")
+        markers = list(marker.finditer(cleaned))
+        if len(markers) >= 2:
+            for i, mk in enumerate(markers):
+                start = mk.end()
+                end = markers[i + 1].start() if i + 1 < len(markers) else len(cleaned)
                 # Keep only up to the next blank line (don't bleed into CAUSE vs SYMPTOM etc.)
-                item = part.split("\n\n")[0].strip()
-                # Strip any stray leading "N. " prefix
-                item = re.sub(r"^\d+\.\s+", "", item)
+                item = cleaned[start:end].split("\n\n")[0].strip()
                 if item:
                     chain_items.append(item)
 
-    # Fallback: split remainder into sentences
+    # Fallback: split the text *after* the root-cause sentence into sentences.
+    # Locate the root cause by search (it may not be a prefix if a leading question
+    # was skipped), so we never slice mid-word.
     if not chain_items:
-        remainder = cleaned[len(root_cause):].strip()
+        rc_idx = cleaned.find(root_cause)
+        remainder = cleaned[rc_idx + len(root_cause):].strip() if rc_idx >= 0 else ""
         for intro in ("The failure sequence:", "The sequence:", "Failure sequence:",
                       "CAUSAL CHAIN:", "Causal chain:"):
             low = remainder.lower()

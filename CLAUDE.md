@@ -275,7 +275,13 @@ by stating exactly what additional data, test, or check would raise it.
 all three are done.**
 
 1. Log the final root cause conclusion with `audit_log_reasoning` including
-   `confidence` and all supporting `evidence_steps`.
+   `confidence` and all supporting `evidence_steps`. Phrase the conclusion text so it
+   **begins with a single, plain-language declarative sentence stating the cause** —
+   "The root cause was [clear cause]." — with no question and no hedging in that sentence.
+   This exact sentence becomes the Root Cause line in both `summary.md` and `report.md`,
+   so it must read clearly on its own. Then give the causal chain as explicit **numbered
+   steps** (`1.`, `2.`, `3.`, ...), each step one short cause-and-effect link — brief
+   enough to be clear without extra detail.
 2. Log at least one corrective action with `audit_log_reasoning` using
    `reasoning_type="corrective_action"`. Each corrective action must:
    - be grounded in the confirmed root cause and cite its supporting `evidence_steps`;
