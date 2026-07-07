@@ -280,10 +280,15 @@ all three are done.**
    "The root cause was [clear cause]." — with no question and no hedging in that sentence.
    This exact sentence becomes the Root Cause line in both `summary.md` and `report.md`,
    so it must read clearly on its own. Then give the causal chain as explicit **numbered
-   steps** (`1.`, `2.`, `3.`, ...), each step one short cause-and-effect link — brief
-   enough to be clear without extra detail.
+   steps** (`1.`, `2.`, `3.`, ...). Each numbered step becomes its own bullet in
+   `summary.md`, so keep every step to **one or two short sentences maximum** — state the
+   single cause-and-effect link plainly and simply, with no supporting detail, caveats, or
+   evidence discussion (that belongs in the conclusion body / report, not the chain).
 2. Log at least one corrective action with `audit_log_reasoning` using
-   `reasoning_type="corrective_action"`. Each corrective action must:
+   `reasoning_type="corrective_action"`. Log each distinct corrective action as its own
+   entry (each becomes its own bullet in `summary.md`). Each corrective action must:
+   - be **one or two short sentences maximum** — state the action clearly and simply, with
+     no extra justification or background in the bullet itself;
    - be grounded in the confirmed root cause and cite its supporting `evidence_steps`;
    - be based on the relevant troubleshooting guide, SOP, or maintenance procedure
      (use `docs_search` if not already retrieved) and cite the document title and revision;
