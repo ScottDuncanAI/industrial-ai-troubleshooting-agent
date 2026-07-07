@@ -310,8 +310,12 @@ full causal chain, ruled-out alternatives, and complete corrective-action menu l
 the chat response for a root cause investigation must contain **only** these elements,
 in this order:
 
-1. **One-line verdict with confidence inline** — e.g. *"IDF surge at low load drove the
-   steam-temp dip (MEDIUM, 0.7)."* One sentence, plain language, confidence in parentheses.
+1. **One-line verdict, prefixed with "Root cause:" and confidence inline** — the sentence
+   must begin with the literal words **`Root cause:`** so the reader is never unsure what the
+   line is, and state the confidence explicitly as **`Confidence level: <value>, <LEVEL>`**
+   (e.g. *"Root cause: IDF surge at low load drove the steam-temp dip. Confidence level: 0.7,
+   MEDIUM."*). One plain-language sentence for the cause; do not abbreviate the confidence to
+   a bare parenthetical like "(MEDIUM, 0.7)".
 2. **Trough fact + anomaly flag** — the "how bad": the peak deviation value, its timestamp,
    and an explicit flag when a value is outside its normal operating range (e.g. *"TE_8332A
    bottomed at 519°C at 11:10 — outside the 530–545°C normal range."*).
