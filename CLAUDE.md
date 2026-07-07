@@ -301,6 +301,28 @@ all three are done.**
      exactly as the skill outputs them (full `file:///` URLs with spaces as `%20`).
    - The links must appear in every root cause response, without exception.
 
+### Chat Response Format — Triage Card
+
+The chat window is the **triage card**, not a fourth copy of the report. During an
+incident the engineer wants the verdict and the next move, not the full narrative. The
+full causal chain, ruled-out alternatives, and complete corrective-action menu live in
+`summary.md` / `report.md` — do **not** repeat them in chat. After `/audit-trail` runs,
+the chat response for a root cause investigation must contain **only** these elements,
+in this order:
+
+1. **One-line verdict with confidence inline** — e.g. *"IDF surge at low load drove the
+   steam-temp dip (MEDIUM, 0.7)."* One sentence, plain language, confidence in parentheses.
+2. **Trough fact + anomaly flag** — the "how bad": the peak deviation value, its timestamp,
+   and an explicit flag when a value is outside its normal operating range (e.g. *"TE_8332A
+   bottomed at 519°C at 11:10 — outside the 530–545°C normal range."*).
+3. **Top 1–2 corrective actions only** — the immediate next move(s). State the remaining
+   actions are in `summary.md`; do not list all of them in chat.
+4. **Links to the reports** — the `file:///` links exactly as `/audit-trail` output them.
+
+Do not include the full numbered causal chain, the rejected-alternatives discussion, or
+the "what would raise confidence" note in chat — those are in the files. If the user asks
+to see the chain or the full reasoning inline, provide it then.
+
 ---
 
 ## Knowledge Graph Reference
