@@ -18,32 +18,53 @@ If Python is not found or is below 3.11, stop and tell the user:
 - On Windows, remind them to check "Add Python to PATH" during installation
 - Ask them to run `/setup` again after installing Python
 
-### 2. Install dependencies
+### 2. Create a project-local virtual environment and install dependencies
+
+Install all dependencies into a **virtual environment (`venv`) inside the project folder** rather
+than into the user's global Python. This keeps everything self-contained: the packages live in a
+`.venv/` folder in the project (already git-ignored), nothing is added to the global Python
+installation, and there are no version clashes with other software on the user's machine.
+
+First, create the virtual environment in the project root:
 
 ```
-pip install -r requirements.txt
+python -m venv .venv
 ```
 
-If this fails with a permissions error, try:
+Then install the dependencies **into the venv**, using the venv's own Python. The path to the
+venv's Python depends on the operating system:
 
-```
-pip install --user -r requirements.txt
-```
+- **Windows:**
+  ```
+  .venv/Scripts/python -m pip install -r requirements.txt
+  ```
+- **macOS / Linux:**
+  ```
+  .venv/bin/python -m pip install -r requirements.txt
+  ```
 
-Tell the user this may take a minute or two on first run, especially for the machine learning packages.
+**Important — for every remaining step in this setup, use the venv's Python, not the bare
+`python`.** In the commands below this is written as `<venv-python>`; substitute the correct path
+for the operating system (`.venv/Scripts/python` on Windows, `.venv/bin/python` on macOS/Linux).
+Using the venv's Python is what ensures the newly installed packages are found.
+
+Tell the user this may take a minute or two on first run, especially for the machine learning
+packages. If `python -m venv` fails because `venv` is unavailable (rare, on some minimal Linux
+installs), tell the user to install it (e.g. `sudo apt install python3-venv`) and run `/setup`
+again.
 
 ### 3. Build the document search index
 
-Check if the vector database already exists:
+Check if the vector database already exists (run with the venv's Python):
 
 ```
-python -c "import os; print('exists' if os.path.isdir('rag_vector_db') and len(os.listdir('rag_vector_db')) > 0 else 'missing')"
+<venv-python> -c "import os; print('exists' if os.path.isdir('rag_vector_db') and len(os.listdir('rag_vector_db')) > 0 else 'missing')"
 ```
 
 If it prints "missing", build it:
 
 ```
-python build_docs_db.py
+<venv-python> build_docs_db.py
 ```
 
 Tell the user this downloads a small AI model (~130 MB) on first run for document search. It only needs to happen once.
@@ -59,16 +80,18 @@ file Claude Code reads to discover project-scoped MCP servers. **Important:**
 Check whether `.mcp.json` already exists at the project root with a `boiler-historian`
 entry. If it does, skip this step.
 
-If not, determine the absolute path to this project directory:
+If not, determine the absolute path to this project directory (run with the venv's Python):
 
 ```
-python -c "import os; print(os.path.abspath('.'))"
+<venv-python> -c "import os; print(os.path.abspath('.'))"
 ```
 
-And the absolute path to the Python interpreter:
+And the absolute path to the venv's Python interpreter — **run this with the venv's Python**, so
+the path returned points at the venv (this is what makes the MCP server use the project-local
+packages rather than the global Python):
 
 ```
-python -c "import sys; print(sys.executable)"
+<venv-python> -c "import sys; print(sys.executable)"
 ```
 
 Then create `.mcp.json` at the project root with this content:
@@ -78,14 +101,14 @@ Then create `.mcp.json` at the project root with this content:
   "mcpServers": {
     "boiler-historian": {
       "type": "stdio",
-      "command": "<absolute path to python>",
+      "command": "<absolute path to venv python>",
       "args": ["<absolute path to project directory>/historian_mcp_server.py"]
     }
   }
 }
 ```
 
-Use the actual absolute paths from the commands above — the interpreter path for `command`,
+Use the actual absolute paths from the commands above — the venv interpreter path for `command`,
 and the project directory joined with `historian_mcp_server.py` for the `args` entry. Use
 forward slashes even on Windows.
 

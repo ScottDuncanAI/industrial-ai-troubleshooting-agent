@@ -393,6 +393,16 @@ Restart Claude Code after re-indexing to reload the MCP server.
 
 ## Codebase Structure
 
+### Python environment
+
+Dependencies are installed into a **project-local virtual environment** at `.venv/` (created by
+`/setup`, git-ignored) — not into the global Python. Everything the project needs lives inside the
+project folder, so the global Python is never modified. The venv's interpreter is
+`.venv/Scripts/python` on Windows and `.venv/bin/python` on macOS/Linux; `.mcp.json` points its
+`command` at that interpreter so the MCP server runs against the venv's packages. Run project
+scripts (e.g. `build_docs_db.py`, `generate_alarms.py`) with the venv's Python. If the project
+folder is moved or renamed, the venv breaks — re-run `/setup` to recreate it.
+
 ### Runtime modules (loaded by the MCP server on startup)
 
 | File | Role |
