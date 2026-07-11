@@ -1,4 +1,5 @@
 # Agentic AI Industrial Troubleshooting Assistant
+By Scott Duncan. Reach me on LinkedIn here: https://www.linkedin.com/in/s-r-duncan/
 
 An agentic AI industrial troubleshooting assistant built on top of a [public coal-fired boiler dataset](https://www.kaggle.com/datasets/nikitamanaenkov/time-series-of-industrial-boiler-operations). The application connects Claude to four plant data sources through an MCP server:
 
