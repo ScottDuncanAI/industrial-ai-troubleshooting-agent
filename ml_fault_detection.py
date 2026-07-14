@@ -194,7 +194,10 @@ def fit_xgb_importance(df, noc_tag, noc_min, noc_max, no_xgb=False):
         print("WARNING: XGBoost skipped — all labels are the same class.", file=sys.stderr)
         return [], "skipped"
 
-    model_name = "XGBoostClassifier"
+    # Try XGBoost first, falling back to GradientBoostingClassifier on ANY failure.
+    # The fallback must wrap both construction AND fit: on macOS, xgboost imports and
+    # constructs fine but raises XGBoostError at fit() time when libomp is missing —
+    # that is not an ImportError, so catching only ImportError would let it crash.
     try:
         from xgboost import XGBClassifier
         clf = XGBClassifier(
@@ -208,9 +211,11 @@ def fit_xgb_importance(df, noc_tag, noc_min, noc_max, no_xgb=False):
             random_state=42,
             n_jobs=-1,
         )
-    except ImportError:
-        print("xgboost not installed; falling back to GradientBoostingClassifier.",
-              file=sys.stderr)
+        clf.fit(X, y)
+        model_name = "XGBoostClassifier"
+    except Exception as exc:
+        print(f"xgboost unavailable ({type(exc).__name__}: {exc}); "
+              "falling back to GradientBoostingClassifier.", file=sys.stderr)
         from sklearn.ensemble import GradientBoostingClassifier
         clf = GradientBoostingClassifier(
             n_estimators=200,
@@ -219,9 +224,9 @@ def fit_xgb_importance(df, noc_tag, noc_min, noc_max, no_xgb=False):
             subsample=0.8,
             random_state=42,
         )
+        clf.fit(X, y)
         model_name = "GradientBoostingClassifier"
 
-    clf.fit(X, y)
     importances = clf.feature_importances_
 
     total = importances.sum()

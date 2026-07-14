@@ -4,6 +4,15 @@ Generate a formatted audit report from a completed root cause analysis trace.
 
 ARGUMENTS: $ARGUMENTS
 
+## Conventions
+
+- **Python:** Always use the project's virtual-environment Python, never bare `python`
+  (which on macOS may not exist or may point at a dependency-free system Python). Written as
+  `<venv-python>` below — substitute `.venv/bin/python` on macOS/Linux or
+  `.venv/Scripts/python` on Windows.
+- **Opening files:** Use the command for the user's OS, written as `<open>` below —
+  `open` on macOS, `xdg-open` on Linux, `start` on Windows.
+
 ## Steps
 
 ### 1. Identify the trace
@@ -13,7 +22,7 @@ If the user provided a run_id as the argument, use that.
 If no run_id was provided, list available traces:
 
 ```
-python -c "import os; dirs = sorted(os.listdir('traces'), reverse=True)[:10]; [print(d) for d in dirs]"
+<venv-python> -c "import os; dirs = sorted(os.listdir('traces'), reverse=True)[:10]; [print(d) for d in dirs]"
 ```
 
 If there is only one trace or the user just completed an investigation, use the most recent one. Otherwise ask which trace to use.
@@ -36,7 +45,7 @@ Check if the session has a `session_meta.json`. If not, call `audit_end_session`
 ### 4. Render the reports
 
 ```
-python render_audit.py traces/{run_id}
+<venv-python> render_audit.py traces/{run_id}
 ```
 
 Capture the output. This generates both `report.md` (detailed) and `summary.md` (executive summary). If the script fails, diagnose and report the error.
@@ -44,8 +53,8 @@ Capture the output. This generates both `report.md` (detailed) and `summary.md` 
 ### 5. Open the reports
 
 ```
-start traces/{run_id}/summary.md
-start traces/{run_id}/report.md
+<open> traces/{run_id}/summary.md
+<open> traces/{run_id}/report.md
 ```
 
 ### 6. Summarize
@@ -59,7 +68,7 @@ Report to the user:
 - Any warnings the renderer flagged
 - Clickable links to both files, formatted as markdown links using the full `file:///` URL
   with spaces encoded as `%20`. **Derive the project's absolute path at runtime — do not
-  hardcode it.** Run `python -c "import os; print(os.path.abspath('.'))"` to get the project
+  hardcode it.** Run `<venv-python> -c "import os; print(os.path.abspath('.'))"` to get the project
   root, convert backslashes to forward slashes, URL-encode spaces as `%20`, and prepend
   `file:///`. Then build:
 

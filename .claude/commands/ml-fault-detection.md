@@ -2,6 +2,15 @@
 
 Run Isolation Forest anomaly detection and XGBoost feature importance analysis on the boiler historian data to identify fault periods and rank early-warning sensors.
 
+## Conventions
+
+- **Python:** Always use the project's virtual-environment Python, never bare `python`
+  (which on macOS may not exist or may point at a dependency-free system Python). Written as
+  `<venv-python>` below — substitute `.venv/bin/python` on macOS/Linux or
+  `.venv/Scripts/python` on Windows.
+- **Opening files:** Use the command for the user's OS, written as `<open>` below —
+  `open` on macOS, `xdg-open` on Linux, `start` on Windows.
+
 ## Steps
 
 ### 1. Confirm data range
@@ -13,10 +22,10 @@ Call `historian_get_data_range` to confirm the dataset's time span and report it
 Run the ML fault detection script:
 
 ```
-python ml_fault_detection.py --downsample-minutes 1 --top-n-events 5
+<venv-python> ml_fault_detection.py --downsample-minutes 1 --top-n-events 5
 ```
 
-Capture the JSON output from stdout. The script prints progress to stderr and the JSON summary to stdout. If xgboost is not installed the script automatically falls back to GradientBoostingClassifier — note which model was used from the `feature_importance.model` field.
+Capture the JSON output from stdout. The script prints progress to stderr and the JSON summary to stdout. If xgboost is unavailable for any reason — not installed, or installed but unable to load (e.g. missing libomp on macOS) — the script automatically falls back to GradientBoostingClassifier. Note which model was used from the `feature_importance.model` field.
 
 If the script fails, diagnose the error from stderr and report it to the user.
 
@@ -25,9 +34,9 @@ If the script fails, diagnose the error from stderr and report it to the user.
 All outputs are saved to `plots/MLFault/MLFault_<date>/`. Open the monitoring chart, feature importance chart, and fault report:
 
 ```
-start <monitoring_plot_path>
-start <feature_importance_plot_path>
-start <fault_report_path>
+<open> <monitoring_plot_path>
+<open> <feature_importance_plot_path>
+<open> <fault_report_path>
 ```
 
 ### 4. Present model summary

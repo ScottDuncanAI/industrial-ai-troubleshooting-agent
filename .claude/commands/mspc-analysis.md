@@ -2,6 +2,15 @@
 
 Run Multivariate Statistical Process Control analysis on the boiler historian data using PCA-based monitoring with T-squared and SPE statistics.
 
+## Conventions
+
+- **Python:** Always use the project's virtual-environment Python, never bare `python`
+  (which on macOS may not exist or may point at a dependency-free system Python). Written as
+  `<venv-python>` below — substitute `.venv/bin/python` on macOS/Linux or
+  `.venv/Scripts/python` on Windows.
+- **Opening files:** Use the command for the user's OS, written as `<open>` below —
+  `open` on macOS, `xdg-open` on Linux, `start` on Windows.
+
 ## Steps
 
 ### 1. Run the analysis
@@ -9,7 +18,7 @@ Run Multivariate Statistical Process Control analysis on the boiler historian da
 Run the MSPC analysis script:
 
 ```
-python mspc_analysis.py
+<venv-python> mspc_analysis.py
 ```
 
 Capture the JSON output from stdout. The script prints progress to stderr and the JSON summary to stdout.
@@ -21,9 +30,9 @@ If the script fails, diagnose the error and report it to the user.
 All outputs are saved to `plots/MSPC/MSPC_<date>/`. Open the monitoring chart, scree plot, and fault report for the user:
 
 ```
-start <monitoring_plot_path>
-start <scree_plot_path>
-start <fault_report_path>
+<open> <monitoring_plot_path>
+<open> <scree_plot_path>
+<open> <fault_report_path>
 ```
 
 ### 3. Present model summary
@@ -43,7 +52,7 @@ Report:
 ### 5. Investigate worst events
 
 For each of the top 3 worst T-squared events from the JSON output:
-1. Open the contribution plot: `start <contribution_plot_path>`
+1. Open the contribution plot: `<open> <contribution_plot_path>`
 2. Call `alarm_search_context` at that timestamp to get alarm context
 3. Call `kg_get_upstream_sensors` on the top contributing tag to trace process causality
 4. Summarize: what tags drove the anomaly, what alarms were active, what equipment is upstream
