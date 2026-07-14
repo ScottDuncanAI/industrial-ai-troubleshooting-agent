@@ -41,6 +41,8 @@ You need two things installed before you begin:
 
 Claude will install everything automatically: dependencies, document search index, and server configuration. No coding required. The first run downloads a ~130MB embedding model for document search (RAG), which is the bulk of the wait. When it's done, it will ask you to restart Claude Code. After restarting, you're ready to go.
 
+> **Disk space.** The repository download itself is small (~10 MB), but `/setup` installs about 1.5 GB of Python dependencies — most of it PyTorch, which powers the document search — plus the ~130 MB embedding model. Have roughly **2 GB of free disk space** available before you start.
+
 ## What can I do with it?
 
 Once setup is complete, just ask questions in plain English:
