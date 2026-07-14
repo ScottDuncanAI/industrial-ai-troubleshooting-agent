@@ -22,7 +22,7 @@ https://github.com/user-attachments/assets/19ca5cb0-4407-44f8-ad01-733f0c95c477
 
 You need two things installed before you begin:
 
-1. **Python 3.11 or newer**, download from [python.org](https://www.python.org/downloads/). On Windows, make sure to check **"Add Python to PATH"** during installation.
+1. **Python 3.11 or newer**, download from [python.org](https://www.python.org/downloads/). On Windows, make sure to check **"Add Python to PATH"** during installation. On macOS, check your current version with `python3 --version` in Terminal — macOS ships with an older Python, so you'll likely need to install a newer one from the link above.
 2. **Claude Code**, see the [installation guide](https://docs.anthropic.com/en/docs/claude-code/overview). Available as a CLI, desktop app, or IDE extension. This requires a Claude Pro account ($20/month) or higher, so set that up first if you don't have one.
 
 ### Setup (3 steps)
