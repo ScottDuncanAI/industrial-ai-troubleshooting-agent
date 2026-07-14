@@ -22,7 +22,7 @@ https://github.com/user-attachments/assets/19ca5cb0-4407-44f8-ad01-733f0c95c477
 
 You need two things installed before you begin:
 
-1. **Python 3.11 or newer**, download from [python.org](https://www.python.org/downloads/). On Windows, make sure to check **"Add Python to PATH"** during installation.
+1. **Python 3.11 or newer**, download from [python.org](https://www.python.org/downloads/). On Windows, make sure to check **"Add Python to PATH"** during installation. On macOS, check your current version with `python3 --version` in Terminal — macOS ships with an older Python, so you'll likely need to install a newer one from the link above.
 2. **Claude Code**, see the [installation guide](https://docs.anthropic.com/en/docs/claude-code/overview). Available as a CLI, desktop app, or IDE extension. This requires a Claude Pro account ($20/month) or higher, so set that up first if you don't have one.
 
 ### Setup (3 steps)
@@ -40,6 +40,8 @@ You need two things installed before you begin:
 ```
 
 Claude will install everything automatically: dependencies, document search index, and server configuration. No coding required. The first run downloads a ~130MB embedding model for document search (RAG), which is the bulk of the wait. When it's done, it will ask you to restart Claude Code. After restarting, you're ready to go.
+
+> **Disk space.** The repository download itself is small (~10 MB), but `/setup` installs about 1.5 GB of Python dependencies — most of it PyTorch, which powers the document search — plus the ~130 MB embedding model. Have roughly **2 GB of free disk space** available before you start.
 
 ## What can I do with it?
 

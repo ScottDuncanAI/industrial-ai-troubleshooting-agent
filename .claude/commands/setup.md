@@ -6,16 +6,25 @@ Run all setup steps so the user can start using the Boiler Historian project. Th
 
 ### 1. Check Python
 
-Verify Python 3.11+ is installed:
+Verify Python 3.11+ is installed. **Try both `python` and `python3`** — on macOS the
+bare `python` command usually does not exist, and Python is invoked as `python3`, so do
+not conclude Python is missing until both have failed:
 
 ```
 python --version
+python3 --version
 ```
 
-If Python is not found or is below 3.11, stop and tell the user:
+Use whichever command reports version 3.11 or newer. Remember which command worked
+(call it the **system Python** below) — you will use that same command to create the
+virtual environment in Step 2.
+
+Only if **neither** `python` nor `python3` reports 3.11+ (both are missing, or both are
+below 3.11), stop and tell the user:
 - They need to install Python 3.11 or newer
 - Direct them to https://www.python.org/downloads/
 - On Windows, remind them to check "Add Python to PATH" during installation
+- On macOS, they can confirm their version any time with `python3 --version`
 - Ask them to run `/setup` again after installing Python
 
 ### 2. Create a project-local virtual environment and install dependencies
@@ -25,11 +34,15 @@ than into the user's global Python. This keeps everything self-contained: the pa
 `.venv/` folder in the project (already git-ignored), nothing is added to the global Python
 installation, and there are no version clashes with other software on the user's machine.
 
-First, create the virtual environment in the project root:
+First, create the virtual environment in the project root, using the **system Python**
+command that worked in Step 1 (`python` or `python3` — on macOS this is almost always
+`python3`):
 
 ```
-python -m venv .venv
+python3 -m venv .venv
 ```
+
+(Substitute `python` if that was the command that reported 3.11+ in Step 1.)
 
 Then install the dependencies **into the venv**, using the venv's own Python. The path to the
 venv's Python depends on the operating system:
